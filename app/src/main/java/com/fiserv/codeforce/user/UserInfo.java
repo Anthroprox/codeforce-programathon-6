@@ -10,6 +10,15 @@ public class UserInfo {
     String email;
     String role;
 
+    public UserInfo clone(){
+        return new UserInfo()
+                .setUid(uid)
+                .setGivenName(givenName)
+                .setEmail(email)
+                .setRole(role)
+                ;
+    }
+
     public Integer getUid() {
         return uid;
     }
