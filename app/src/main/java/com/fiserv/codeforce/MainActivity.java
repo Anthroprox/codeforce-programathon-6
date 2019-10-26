@@ -3,13 +3,12 @@ package com.fiserv.codeforce;
 import android.app.Activity;
 import android.content.Context;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fiserv.codeforce.login.CredentialsPojo;
 import com.fiserv.codeforce.login.LoginRepository;
 import com.fiserv.codeforce.login.ResponseLogin;
-import com.fiserv.codeforce.rest.DemoAPI;
+import com.fiserv.codeforce.utils.AsteriskPasswordTransformationMethod;
 
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
@@ -33,20 +32,24 @@ public class MainActivity extends Activity {
     
     @Click(R.id.btn_login)
     public void click() {
-        initSession();
+        if(matchLogin()){
+            initSession();
+        }
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        txt_password.setTransformationMethod(new AsteriskPasswordTransformationMethod());
     }
 
     @Background
     public void initSession() {
         try {
-
-            //if(!matchLogin()){
             ResponseLogin r = loginRepository.login(new CredentialsPojo()
                     .setUsername(txt_user.getText().toString())
                     .setPassword(txt_password.getText().toString())).getBody();
             PrincipalActivity_.intent(getApplicationContext()).start();
-//            toastMessage(r.getUserInfo().getGivenName());
-            //}
         }catch (Exception e){
             e.printStackTrace();
         }
