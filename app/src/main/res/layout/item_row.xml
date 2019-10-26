@@ -8,9 +8,19 @@
 
     <TextView
         android:id="@+id/tvItem"
-        android:layout_width="match_parent"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="left"
         android:padding="16dp"
-        android:text="Item X" />
+        android:text="Hello Left" />
+
+    <TextView
+        android:id="@+id/tvItem2"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:padding="16dp"
+        android:text="Hello Right" />
+
 
 </androidx.cardview.widget.CardView>
