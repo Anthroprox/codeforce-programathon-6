@@ -3,38 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="nav_View">
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/action_home"
-            android:enabled="true"
-            android:title="@string/home"
-            app:showAsAction="ifRoom" />
-        <item
-            android:id="@+id/action_msg"
-            android:enabled="true"
-            android:title="@string/msg"
-            app:showAsAction="ifRoom" />
-        <item
-            android:id="@+id/action_video"
-            android:enabled="true"
-            android:title="@string/video"
-            app:showAsAction="ifRoom" />
 
-    </group>
-    <item android:title="@string/general">
-        <menu>
-            <item
-                android:id="@+id/action_info"
-                android:enabled="true"
-                android:title="@string/info"
-                app:showAsAction="ifRoom" />
-            <item
-                android:id="@+id/contact"
-                android:title="@string/con"
-                android:enabled="true"
-                app:showAsAction="ifRoom"/>
 
-        </menu>
+    <item android:title="@string/session"
+        app:showAsAction="collapseActionView">
+
     </item>
 
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/btn_logout"
+            android:enabled="true"
+            android:title="@string/btn_logout"
+            android:visible="true"
+            app:showAsAction="collapseActionView" />
+    </group>
 </menu>

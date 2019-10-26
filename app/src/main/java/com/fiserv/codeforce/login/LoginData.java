@@ -7,16 +7,21 @@ import org.androidannotations.annotations.EBean;
 @EBean
 public class LoginData {
 
-//    @JsonProperty("access_token")
     String access_token;
-//    @JsonProperty("expires_in")
     Integer expires_in;
-//    @JsonProperty("token_type")
     String token_type;
-//    @JsonProperty("refresh_token")
     String refresh_token;
-//    @JsonProperty("scope")
     String scope;
+
+    public LoginData clone(){
+        return new LoginData()
+                .setAccess_token(this.access_token)
+                .setExpires_in(this.expires_in)
+                .setToken_type(this.token_type)
+                .setRefresh_token(this.refresh_token)
+                .setScope(this.scope)
+                ;
+    }
 
     public String getAccess_token() {
         return access_token;

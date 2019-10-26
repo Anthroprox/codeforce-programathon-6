@@ -12,15 +12,13 @@ import com.fiserv.codeforce.login.ResponseLogin;
 import com.fiserv.codeforce.utils.AsteriskPasswordTransformationMethod;
 
 import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.rest.spring.annotations.RestService;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.client.ResourceAccessException;
-
-import java.net.ConnectException;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends Activity {
@@ -35,6 +33,9 @@ public class MainActivity extends Activity {
 
     @RestService
     LoginRepository loginRepository;
+
+    @Bean
+    GlobalContainer globalContainer;
     
     @Click(R.id.btn_login)
     public void click() {
@@ -56,6 +57,9 @@ public class MainActivity extends Activity {
             ResponseLogin r = loginRepository.login(new CredentialsPojo()
                     .setUsername(txt_user.getText().toString())
                     .setPassword(txt_password.getText().toString())).getBody();
+
+            globalContainer.setLoginData(r.getLoginData());
+            globalContainer.setUserInfo(r.getUserInfo());
             goIntent();
 
         }
