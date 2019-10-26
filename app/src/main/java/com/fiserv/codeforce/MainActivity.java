@@ -2,6 +2,7 @@ package com.fiserv.codeforce;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -13,6 +14,7 @@ import com.fiserv.codeforce.utils.AsteriskPasswordTransformationMethod;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.rest.spring.annotations.RestService;
 
@@ -49,19 +51,24 @@ public class MainActivity extends Activity {
             ResponseLogin r = loginRepository.login(new CredentialsPojo()
                     .setUsername(txt_user.getText().toString())
                     .setPassword(txt_password.getText().toString())).getBody();
-            PrincipalActivity_.intent(getApplicationContext()).start();
+            goIntent();
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
+    @UiThread
+    public void goIntent(){
+        PrincipalActivity_.intent(getApplicationContext()).flags(Intent.FLAG_ACTIVITY_NEW_TASK).start();
+    }
+
     public Boolean matchUsername(String username){
-        String regexUser = "^[1-9]{1}[0-9]{8}$";
+        String regexUser = "^[1-9][0-9]{1,9}$";
         return username.matches(regexUser);
     }
 
     public Boolean matchPass(String pass){
-        String regexPass = "^[a-zA-Z0-9]{6,8}$";
+        String regexPass = "^[a-zA-Z0-9!@#$%^&*(),.?\":{}|<>]{6,8}$$";
         return pass.matches(regexPass);
     }
 
@@ -70,11 +77,11 @@ public class MainActivity extends Activity {
         String userId = txt_user.getText().toString();
         String pass = txt_password.getText().toString();
         if(!matchUsername(userId)) {
-            toastMessage("ID incorrecto");
+            toastMessage("DNI Inválido!");
             return false;
         }
         if(!matchPass(pass)){
-            toastMessage("Password no cumple con los requisitos");
+            toastMessage("Password Inválido!");
             return false;
         }
         return true;
