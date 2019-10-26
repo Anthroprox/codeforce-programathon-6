@@ -17,6 +17,10 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.rest.spring.annotations.RestService;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.client.ResourceAccessException;
+
+import java.net.ConnectException;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends Activity {
@@ -35,7 +39,8 @@ public class MainActivity extends Activity {
     @Click(R.id.btn_login)
     public void click() {
         if(matchLogin()){
-            initSession();
+                initSession();
+//                toastMessage("No se pudo inicar sesión");
         }
     }
 
@@ -46,15 +51,21 @@ public class MainActivity extends Activity {
     }
 
     @Background
-    public void initSession() {
+    public void initSession(){
         try {
             ResponseLogin r = loginRepository.login(new CredentialsPojo()
                     .setUsername(txt_user.getText().toString())
                     .setPassword(txt_password.getText().toString())).getBody();
             goIntent();
-        }catch (Exception e){
-            e.printStackTrace();
+
         }
+        catch (Exception e){
+            if(e.getClass() != ResourceAccessException.class)
+                toastMessage("No se pudo inicar sesión");
+            else
+                toastMessage("No se pudo conectar a internet");
+        }
+
     }
 
     @UiThread
@@ -87,8 +98,8 @@ public class MainActivity extends Activity {
         return true;
     }
 
-
-    private void toastMessage(String message){
+    @UiThread
+    public void toastMessage(String message){
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_SHORT;
 
