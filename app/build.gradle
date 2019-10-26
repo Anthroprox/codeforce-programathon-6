@@ -39,4 +39,8 @@ dependencies {
     implementation "com.fasterxml.jackson.core:jackson-core:2.9.7"
     implementation "com.fasterxml.jackson.core:jackson-databind:2.9.7"
     implementation "org.springframework.android:spring-android-rest-template:2.0.0.M3"
+
+    implementation 'com.google.android.material:material:1.0.0-rc01'
+
+
 }

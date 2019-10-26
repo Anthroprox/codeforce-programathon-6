@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">codeforce-programathon-6</string>
+
+
+
+    <string name="session">Sesión</string>
+    <string name="btn_logout">Salir</string>
+
 </resources>

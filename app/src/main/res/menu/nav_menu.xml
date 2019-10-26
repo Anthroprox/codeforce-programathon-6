@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="nav_View">
+
+
+    <item android:title="@string/session"
+        app:showAsAction="collapseActionView">
+
+    </item>
+
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/btn_logout"
+            android:enabled="true"
+            android:title="@string/btn_logout"
+            android:visible="true"
+            app:showAsAction="collapseActionView" />
+    </group>
+</menu>
