@@ -4,22 +4,24 @@ import org.androidannotations.annotations.EBean;
 
 @EBean
 public class CredentialsPojo {
-    private String Username;
-    private String Password;
+    String Username;
+    String Password;
 
     public String getUsername() {
         return Username;
     }
 
-    public void setUsername(String username) {
+    public CredentialsPojo setUsername(String username) {
         Username = username;
+        return this;
     }
 
     public String getPassword() {
         return Password;
     }
 
-    public void setPassword(String password) {
+    public CredentialsPojo setPassword(String password) {
         Password = password;
+        return this;
     }
 }
