@@ -7,7 +7,7 @@
     app:cardUseCompatPadding="true">
 
     <TextView
-        android:id="@+id/tvItem"
+        android:id="@+id/card_name"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
@@ -15,7 +15,7 @@
         android:text="Hello Left" />
 
     <TextView
-        android:id="@+id/tvItem2"
+        android:id="@+id/card_exam"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="right"

@@ -16,10 +16,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
 
-    public List<String> mItemList;
+    public List<RecyclerViewerCardObject> mItemList;
 
 
-    public RecyclerViewAdapter(List<String> itemList) {
+    public RecyclerViewAdapter(List<RecyclerViewerCardObject> itemList) {
 
         mItemList = itemList;
     }
@@ -67,12 +67,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvItem;
+        TextView name;
+        TextView exam;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvItem = itemView.findViewById(R.id.tvItem);
+            name = itemView.findViewById(R.id.card_name);
+            exam = itemView.findViewById(R.id.card_exam);
         }
     }
 
@@ -93,8 +95,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private void populateItemRows(ItemViewHolder viewHolder, int position) {
 
-        String item = mItemList.get(position);
-        viewHolder.tvItem.setText(item);
+        RecyclerViewerCardObject item = mItemList.get(position);
+        viewHolder.name.setText(item.getName());
+        viewHolder.exam.setText(item.getExam());
 
     }
 

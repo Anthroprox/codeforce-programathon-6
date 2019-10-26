@@ -22,7 +22,7 @@ public class MyStudentList extends Activity {
     @ViewById(R.id.recyclerView)
     RecyclerView recyclerView;
     RecyclerViewAdapter recyclerViewAdapter;
-    ArrayList<String> rowsArrayList = new ArrayList<>();
+    ArrayList<RecyclerViewerCardObject> rowsArrayList = new ArrayList<>();
 
     boolean isLoading = false;
 
@@ -36,7 +36,7 @@ public class MyStudentList extends Activity {
     private void populateData() {
         int i = 0;
         while (i < 10) {
-            rowsArrayList.add("Item " + i);
+            rowsArrayList.add(new RecyclerViewerCardObject("Item " + i, "exam " + i));
             i++;
         }
     }
@@ -89,7 +89,7 @@ public class MyStudentList extends Activity {
                 int nextLimit = currentSize + 10;
 
                 while (currentSize - 1 < nextLimit) {
-                    rowsArrayList.add("Item " + currentSize);
+                    rowsArrayList.add(new RecyclerViewerCardObject("Item " + currentSize, "exam " + currentSize));
                     currentSize++;
                 }
 
