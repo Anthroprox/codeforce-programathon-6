@@ -30,11 +30,14 @@ public class MainActivity extends Activity {
 
     @RestService
     LoginRepository loginRepository;
-
-    private int i = 1;
-
+    
     @Click(R.id.btn_login)
     public void click() {
+        initSession();
+    }
+
+    @Background
+    public void initSession() {
         try {
 
             //if(!matchLogin()){
@@ -42,15 +45,11 @@ public class MainActivity extends Activity {
                     .setUsername(txt_user.getText().toString())
                     .setPassword(txt_password.getText().toString())).getBody();
             PrincipalActivity_.intent(getApplicationContext()).start();
-            toastMessage(r.getUserInfo().getGivenName());
+//            toastMessage(r.getUserInfo().getGivenName());
             //}
         }catch (Exception e){
             e.printStackTrace();
         }
-    }
-
-    public void initSession() {
-
     }
 
     public Boolean matchUsername(String username){
