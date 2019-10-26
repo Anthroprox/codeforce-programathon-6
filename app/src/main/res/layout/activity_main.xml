@@ -39,7 +39,8 @@
             android:inputType="textPersonName"
             android:maxEms="10"
             android:minWidth="250dp"
-            android:minEms="8" />
+            android:minEms="8"
+            android:text="1111" />
 
         <EditText
             android:id="@+id/txt_password"
@@ -50,7 +51,8 @@
             android:inputType="textPassword"
             android:maxEms="8"
             android:minWidth="250dp"
-            android:minEms="6" />
+            android:minEms="6"
+            android:text="Te$t1234" />
 
         <Button
             android:id="@+id/btn_login"
