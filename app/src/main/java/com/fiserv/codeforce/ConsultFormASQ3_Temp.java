@@ -144,6 +144,4 @@ public class ConsultFormASQ3_Temp extends AppCompatActivity {
         }
 
     }
-
-
 }

@@ -14,12 +14,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fiserv.codeforce.areas.AreaBean;
 import com.fiserv.codeforce.areas.AreaResult;
 
+import org.androidannotations.annotations.AfterExtras;
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
@@ -31,6 +35,9 @@ public class QuestionAnswersActivity extends AppCompatActivity {
 
     @Extra("result")
     AreaResult areaResult;
+
+    @Bean
+    AreaBean bean;
 
     private int total;
 
@@ -81,7 +88,7 @@ public class QuestionAnswersActivity extends AppCompatActivity {
         if (!validateAns())
             toastMessage("Los campos deben estar entre: 0,5,10");
         else
-            finishActivity(RESULT_OK);
+            finishActivity(RESULT_FIRST_USER);
 
     }
 
@@ -92,21 +99,21 @@ public class QuestionAnswersActivity extends AppCompatActivity {
         finishActivity(RESULT_CANCELED);
     }
 
-    ;
-
     @AfterViews
-    public void bindData() {
-//        try {
-//            txtQAArea.setText(areaResult.getAreaName());
-//            txtP1.setText(String.valueOf(areaResult.getValue(0)));
-//            txtP2.setText(String.valueOf(areaResult.getValue(1)));
-//            txtP3.setText(String.valueOf(areaResult.getValue(2)));
-//            txtP4.setText(String.valueOf(areaResult.getValue(3)));
-//            txtP5.setText(String.valueOf(areaResult.getValue(4)));
-//            txtP6.setText(String.valueOf(areaResult.getValue(5)));
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
+    public void bindData(){
+        if(areaResult.getValues()[0] != -1) {
+            try {
+                txtQAArea.setText(areaResult.getAreaName());
+                txtP1.setText(String.valueOf(areaResult.getValue(0)));
+                txtP2.setText(String.valueOf(areaResult.getValue(1)));
+                txtP3.setText(String.valueOf(areaResult.getValue(2)));
+                txtP4.setText(String.valueOf(areaResult.getValue(3)));
+                txtP5.setText(String.valueOf(areaResult.getValue(4)));
+                txtP6.setText(String.valueOf(areaResult.getValue(5)));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public boolean validateAns() {
@@ -151,10 +158,14 @@ public class QuestionAnswersActivity extends AppCompatActivity {
     }
 
     public void finishActivity(int result) {
-        Intent intent = new Intent(this, AreasActivity.class);
-        intent.putExtra("result", areaResult);
-        setResult(result, intent);
+
+        Intent intent = new Intent(this,AreasActivity_.class);
+        intent.putExtra("results", areaResult);
+        setResult(RESULT_OK,intent);
+        bean.hash.put("result",areaResult);
         finish();
+
+
     }
 
     public void setStatus() {
@@ -197,8 +208,5 @@ public class QuestionAnswersActivity extends AppCompatActivity {
         }
     }
 
-    public String validateInputs() {
-        return "";
-    }
 }
 

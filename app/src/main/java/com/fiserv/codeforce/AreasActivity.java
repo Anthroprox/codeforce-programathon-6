@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fiserv.codeforce.areas.AreaBean;
 import com.fiserv.codeforce.areas.AreaResult;
 import com.fiserv.codeforce.areas.AreasAdapter;
 import com.fiserv.codeforce.attendance.Attendance;
@@ -33,6 +34,7 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.rest.spring.annotations.RestService;
@@ -55,7 +57,10 @@ public class AreasActivity extends AppCompatActivity {
     @Bean
     UserInfo userInfo;
 
-    @Extra("Result")
+    @Bean
+    AreaBean bean;
+
+    @Extra("Results")
     AreaResult result;
 
     @Extra("form")
@@ -79,41 +84,56 @@ public class AreasActivity extends AppCompatActivity {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         String date = simpleDateFormat.format(new Date());
         txtDate.setText("FECHA APLICACION: " + date);
+        if(result != null)
+            adapter.getAreaResultByArea(result.getAreaName()).setValues(result.getValues());
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if(bean.hash.containsKey("result")) {
+            result = (AreaResult) bean.hash.get("result");
+            setResult();
+        }
+    }
+
+    public void setResult(){
+        adapter.getAreaResultByArea(result.getAreaName()).setValues(result.getValues());
     }
 
     @Click(R.id.txtCom)
     void clickCom() {
         Intent i = new Intent(AreasActivity.this, QuestionAnswersActivity_.class);
         i.putExtra("result", adapter.getAreaResultByArea("Comunicación"));
-        startActivity(i);
+        startActivityForResult(i,RESULT_OK);
     }
 
     @Click(R.id.txtMG)
     void clickMG() {
         Intent i = new Intent(AreasActivity.this, QuestionAnswersActivity_.class);
         i.putExtra("result", adapter.getAreaResultByArea("Motora Gruesa"));
-        startActivity(i);
+        startActivityForResult(i,RESULT_OK);
     }
 
     @Click(R.id.txtMF)
     void clickMF() {
         Intent i = new Intent(AreasActivity.this, QuestionAnswersActivity_.class);
         i.putExtra("result", adapter.getAreaResultByArea("Motora Fina"));
-        startActivity(i);
+        startActivityForResult(i,RESULT_OK);
     }
 
     @Click(R.id.txtRP)
     void clickRP() {
         Intent i = new Intent(AreasActivity.this, QuestionAnswersActivity_.class);
         i.putExtra("result", adapter.getAreaResultByArea("Resolución de problemas"));
-        startActivity(i);
+        startActivityForResult(i,RESULT_OK);
     }
 
     @Click(R.id.txtSocial)
     void clickSocial() {
         Intent i = new Intent(AreasActivity.this, QuestionAnswersActivity_.class);
         i.putExtra("result", adapter.getAreaResultByArea("Socio-individual"));
-        startActivity(i);
+        startActivityForResult(i,RESULT_OK);
     }
 
     @Override
@@ -122,11 +142,6 @@ public class AreasActivity extends AppCompatActivity {
         setContentView(R.layout.activity_areas);
     }
 
-    @AfterExtras
-    void chargeExtras() {
-        if (result != null)
-            adapter.getAreaResultByArea(result.getAreaName()).setValues(result.getValues());
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Click(R.id.btnSaveAll)
@@ -155,6 +170,10 @@ public class AreasActivity extends AppCompatActivity {
             );
         }
 
+        if(validateResults())
+            saveAllToAPI(mapQuestionsToMatrixParameter());
+        else
+            toastMessage("Por favor, Rellenar todos los campos");
     }
 
     @Background
@@ -206,6 +225,17 @@ public class AreasActivity extends AppCompatActivity {
                 .setResultList(resultRows);
 
         return resultMatrixParameter;
+    }
+
+
+    public boolean validateResults(){
+        for(AreaResult area: adapter.getResults()){
+            for(int value: area.getValues()){
+                if(value == -1)
+                    return false;
+            }
+        }
+        return true;
     }
 
 
