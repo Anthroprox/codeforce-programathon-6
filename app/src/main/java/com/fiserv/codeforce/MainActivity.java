@@ -1,6 +1,7 @@
 package com.fiserv.codeforce;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.provider.Settings;
 import android.widget.TextView;
 
@@ -33,25 +34,19 @@ public class MainActivity extends Activity {
     @RestService
     DemoAPI api;
 
-
-
-    @RestService
-    StudentRepository studentRepository;
-
     @Bean
     StudentRepositoryInterceptor studentRepositoryInterceptor;
 
 
     @Click(R.id.button)
     public void click() {
-        setText();
+        loadView();
     }
 
     @Background
     public void setText() {
         try {
-            ListStudent list = studentRepository.GetMyStudents().getBody();
-            System.out.print(list.toString());
+            System.out.print("Hello!");
 
         }catch (Exception e){
             e.printStackTrace();
@@ -59,8 +54,10 @@ public class MainActivity extends Activity {
     }
 
     @UiThread
-    public void loadView(){
-        MyStudentList_.intent(getApplicationContext()).start();
+    public void loadView() {
+        Intent sendIntent = new Intent(MainActivity.this, MyStudentList_.class);
+        sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(sendIntent);
     }
 
 //    @AfterInject

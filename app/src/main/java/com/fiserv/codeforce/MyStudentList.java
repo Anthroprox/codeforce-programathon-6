@@ -1,6 +1,8 @@
 package com.fiserv.codeforce;
 
+import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
+import androidx.annotation.UiThread;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,22 +11,32 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.fiserv.codeforce.student.ListStudent;
+import com.fiserv.codeforce.student.StudentRepository;
+
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.rest.spring.annotations.RestService;
 
 import java.util.ArrayList;
 
 @EActivity(R.layout.activity_my_student_list)
 public class MyStudentList extends Activity {
 
+    @RestService
+    StudentRepository studentRepository;
 
     @ViewById(R.id.recyclerView)
     RecyclerView recyclerView;
     RecyclerViewAdapter recyclerViewAdapter;
     ArrayList<RecyclerViewerCardObject> rowsArrayList = new ArrayList<>();
+    ListStudent rawData = null;
 
     boolean isLoading = false;
+
+    boolean flag = true;
 
     @AfterViews
     public void postCreate() {
@@ -33,16 +45,22 @@ public class MyStudentList extends Activity {
         initScrollListener();
     }
 
-    private void populateData() {
+    @Background
+    protected void populateData() {
+
         int i = 0;
-        while (i < 10) {
-            rowsArrayList.add(new RecyclerViewerCardObject("Item " + i, "exam " + i));
-            i++;
+
+        rawData = studentRepository.GetMyStudents().getBody();
+
+        for (i = 0; i < Math.min(10, rawData.size()); i++) {
+            rowsArrayList.add(new RecyclerViewerCardObject(rawData.get(i).getFirstName() + " " + rawData.get(i).getLastName(), rawData.get(i).getForm().getName()));
         }
+
+        flag = false;
     }
 
     private void initAdapter() {
-
+        while (flag) ;
         recyclerViewAdapter = new RecyclerViewAdapter(rowsArrayList);
         recyclerView.setAdapter(recyclerViewAdapter);
     }
@@ -86,10 +104,10 @@ public class MyStudentList extends Activity {
                 int scrollPosition = rowsArrayList.size();
                 recyclerViewAdapter.notifyItemRemoved(scrollPosition);
                 int currentSize = scrollPosition;
-                int nextLimit = currentSize + 10;
+                int nextLimit = Math.min(currentSize + 10, rawData.size()-1);
 
                 while (currentSize - 1 < nextLimit) {
-                    rowsArrayList.add(new RecyclerViewerCardObject("Item " + currentSize, "exam " + currentSize));
+                    rowsArrayList.add(new RecyclerViewerCardObject(rawData.get(currentSize).getFirstName() + " " + rawData.get(currentSize).getLastName(), rawData.get(currentSize).getForm().getName()));
                     currentSize++;
                 }
 
