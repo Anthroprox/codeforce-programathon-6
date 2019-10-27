@@ -1,7 +1,9 @@
 package com.fiserv.codeforce.result;
 
 
-public class ResultCell {
+import java.io.Serializable;
+
+public class ResultCell implements Serializable {
     private Integer id;
     private Integer index;
     private Integer value;
