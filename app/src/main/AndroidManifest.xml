@@ -13,19 +13,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CreateActionPlanForASQ3_">
-        </activity>
+        <activity android:name=".ResultHistory_"></activity>
+        <activity android:name=".CreateActionPlanForASQ3_"></activity>
         <activity android:name=".PrincipalActivity_" />
-        <activity android:name=".ActionPlans_"></activity>
-        <activity android:name=".PrincipalActivity_" />
+        <activity android:name=".ActionPlans_" />
+<!--        <activity android:name=".PrincipalActivity_" />-->
         <activity android:name=".ConsultFormASQ3_Temp_" />
-        <activity android:name=".ConsultFormASQ3_Temp_" />
+<!--        <activity android:name=".ConsultFormASQ3_Temp_" />-->
         <activity android:name=".MyStudentList_" />
-        <activity android:name=".AreasActivity_"></activity>
+        <activity android:name=".AreasActivity_" />
         <activity android:name=".QuestionAnswersActivity_" />
         <activity android:name=".MainActivity_">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

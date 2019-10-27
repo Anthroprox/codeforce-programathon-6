@@ -93,7 +93,6 @@ public class ActionPlans extends AppCompatActivity {
 
     @Click(R.id.button2)
     public void back() {
-        super.onBackPressed();
         Intent intent = new Intent(ActionPlans.this, MyStudentList_.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 

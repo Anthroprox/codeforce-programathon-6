@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/button_history_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+
+            android:text="Ir a atras" />
+
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/editText_student_history"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30px"
+        android:layout_marginBottom="100dp"
+        android:editable="false"
+        android:ems="10"
+        android:inputType="none"
+        android:text="Name" />
+
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <EditText
+        android:id="@+id/editText_dbo_history"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinner2"
+        android:layout_centerHorizontal="true"
+        android:editable="false"
+        android:ems="10"
+        android:inputType="none"
+        android:text="Name" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableLayout
+            android:id="@+id/table_history"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TableLayout android:id="@+id/history_data">
+
+                </TableLayout>
+            </TableRow>
+        </TableLayout>
+
+    </ScrollView>
+
+    <!--        <TableRow-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent">-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/label_category_history_table"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginHorizontal="10dp"-->
+    <!--                android:text="Areas de desarrrollo" />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/label_grade_history_table"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginHorizontal="10dp"-->
+    <!--                android:text="Calificacion" />-->
+    <!--        </TableRow>-->
+
+
+    </LinearLayout>
+
+    <!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--    xmlns:tools="http://schemas.android.com/tools"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="match_parent"-->
+    <!--    tools:context=".ResultHistory">-->
+
+    <!--    <EditText-->
+    <!--        android:id="@+id/editText_student_history"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_centerHorizontal="true"-->
+    <!--        android:layout_marginTop="30px"-->
+    <!--        android:layout_marginBottom="100dp"-->
+    <!--        android:ems="10"-->
+    <!--        android:inputType="textPersonName"-->
+    <!--        android:text="Name"-->
+    <!--        tools:layout_editor_absoluteX="85dp"-->
+    <!--        tools:layout_editor_absoluteY="47dp" />-->
+
+
+    <!--    <Spinner-->
+    <!--        android:id="@+id/spinner_history"-->
+    <!--        android:layout_width="320dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_below="@id/editText_student_history"-->
+    <!--        android:layout_centerHorizontal="true"-->
+    <!--        tools:layout_editor_absoluteX="1dp"-->
+    <!--        tools:layout_editor_absoluteY="123dp" />-->
+
+    <!--    <EditText-->
+    <!--        android:id="@+id/editText_dbo_history"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_below="@id/spinner_history"-->
+    <!--        android:layout_centerHorizontal="true"-->
+    <!--        android:ems="10"-->
+    <!--        android:inputType="textPersonName"-->
+    <!--        android:text="Name"-->
+    <!--        tools:layout_editor_absoluteX="85dp"-->
+    <!--        tools:layout_editor_absoluteY="184dp" />-->
+
+    <!--    <ScrollView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent">-->
+
+    <!--        <LinearLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:orientation="vertical">-->
+
+    <!--        </LinearLayout>-->
+    <!--    </ScrollView>-->
+
+    <!--</RelativeLayout>-->

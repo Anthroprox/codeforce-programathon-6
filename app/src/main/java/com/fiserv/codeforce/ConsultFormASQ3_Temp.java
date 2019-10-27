@@ -72,7 +72,7 @@ public class ConsultFormASQ3_Temp extends AppCompatActivity {
     HashMap<String, List<String>> expandableListDetail;
 
     @AfterViews
-    public void afterView(){
+    public void afterView() {
         clearText();
         requestData();
 
@@ -83,11 +83,11 @@ public class ConsultFormASQ3_Temp extends AppCompatActivity {
         ResponseEntity<StudentPojo> student = studentRepository.GetByDni(dni);
 //        String dni = getIntent().getExtras().get("STUDENT_DNI").toString();
 //        System.out.println(dni);
-        if(student.getStatusCode() == HttpStatus.OK){
+        if (student.getStatusCode() == HttpStatus.OK) {
 
             StudentPojo entity = student.getBody();
             ResponseEntity<FullFormData> form = formRepository.getById(formId);
-            if(form.getStatusCode() == HttpStatus.OK) {
+            if (form.getStatusCode() == HttpStatus.OK) {
                 fillData(entity, form.getBody());
             }
 
@@ -101,11 +101,11 @@ public class ConsultFormASQ3_Temp extends AppCompatActivity {
 //        dniText.setText(entity.getDni().toString());
 //        gender.setText(entity.getGender());
 
-        expandableListTitle = Arrays.asList(String.format("%s %s", entity.getFirstName(), entity.getLastName()),"ASQ 3");
+        expandableListTitle = Arrays.asList(String.format("%s %s", entity.getFirstName(), entity.getLastName()), "ASQ 3");
         expandableListDetail = new HashMap<>();
         expandableListDetail.put(String.format("%s %s", entity.getFirstName(), entity.getLastName()), Arrays.asList(
                 String.format("Name: %s %s", entity.getLastName(), entity.getFirstName()),
-                String.format("Gender: %s",entity.getGender()),
+                String.format("Gender: %s", entity.getGender()),
                 String.format("DNI: %d", entity.getDni())
         ));
         expandableListDetail.put("ASQ 3", Arrays.asList(
@@ -128,21 +128,35 @@ public class ConsultFormASQ3_Temp extends AppCompatActivity {
     }
 
     @Click(R.id.areas_btn)
-    public void clickAreas(){
+    public void clickAreas() {
         openAreas();
     }
 
     @Click(R.id.planes_btn)
-    public void clickActionPlans(){
+    public void clickActionPlans() {
         openActionPlans();
+    }
+
+    @Click(R.id.history_result_btn)
+    public void clickHistoricResults() {
+        openHistoryResult();
+    }
+
+    @Background
+    protected void openHistoryResult() {
+        Intent i = new Intent(ConsultFormASQ3_Temp.this, ResultHistory_.class);
+        i.putExtra("examId", formId);
+        i.putExtra("studentDni", dni);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
     }
 
     @Background
     protected void openActionPlans() {
         ResponseEntity<StudentPojo> student = studentRepository.GetByDni(dni);
         Intent i = new Intent(ConsultFormASQ3_Temp.this, ActionPlans_.class);
-        i.putExtra("form",formId);
-        i.putExtra("student",studentId);
+        i.putExtra("form", formId);
+        i.putExtra("student", studentId);
         i.putExtra("studentName", student.getBody().getFirstName() + " " + student.getBody().getLastName());
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
@@ -152,7 +166,7 @@ public class ConsultFormASQ3_Temp extends AppCompatActivity {
     @Background
     protected void openAreas() {
         ResponseEntity<FullFormData> formResponse = formRepository.getById(formId);
-        if(formResponse.getStatusCode() == HttpStatus.OK){
+        if (formResponse.getStatusCode() == HttpStatus.OK) {
             Intent intent = new Intent(ConsultFormASQ3_Temp.this, AreasActivity_.class);
             intent.putExtra("form", formResponse.getBody());
             intent.putExtra("studentId", studentId);

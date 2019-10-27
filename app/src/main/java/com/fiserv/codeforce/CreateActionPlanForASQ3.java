@@ -211,7 +211,7 @@ public class CreateActionPlanForASQ3 extends Activity {
     }
 
     @UiThread
-    public void updateTableAreaDesarrollo(TableRow row){
+    public void updateTableAreaDesarrollo(TableRow row) {
         tableAreaDesarrollo.addView(row);
     }
 
