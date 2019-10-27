@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CreateActionPlanForASQ3_"></activity>
+        <activity android:name=".CreateActionPlanForASQ3_">
+        </activity>
         <activity android:name=".PrincipalActivity_" />
         <activity android:name=".ConsultFormASQ3_Temp_" />
         <activity android:name=".MyStudentList_" />
