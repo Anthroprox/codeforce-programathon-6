@@ -6,4 +6,70 @@
     android:layout_height="match_parent"
     tools:context=".ConsultFormASQ3_Temp">
 
+<!--    <EditText-->
+<!--        android:id="@+id/detail_student_name"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:editable="false"-->
+<!--        android:ems="10"-->
+<!--        android:inputType="none"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.454"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.147" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/detail_student_dni"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:editable="false"-->
+<!--        android:ems="10"-->
+<!--        android:inputType="none"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.454"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/detail_student_name"-->
+<!--        app:layout_constraintVertical_bias="0.057" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/detail_student_dob"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:editable="false"-->
+<!--        android:ems="10"-->
+<!--        android:inputType="none"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.454"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/detail_student_dni"-->
+<!--        app:layout_constraintVertical_bias="0.081" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/detail_student_gender"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:editable="false"-->
+<!--        android:ems="10"-->
+<!--        android:inputType="none"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.454"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/detail_student_dob"-->
+<!--        app:layout_constraintVertical_bias="0.102" />-->
+
+
+    <ExpandableListView
+        android:id="@+id/expandableListView"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="0.7dp" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

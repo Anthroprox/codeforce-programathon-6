@@ -20,4 +20,9 @@ public interface LoginRepository {
     @RequiresPermission(Manifest.permission.INTERNET)
     @Post("/LogIn")
     ResponseEntity<ResponseLogin> login(@Body CredentialsPojo credentials);
+
+
+    @RequiresPermission(Manifest.permission.INTERNET)
+    @Post("/LogIn/RefreshToken")
+    ResponseEntity<LoginData> refresh(@Body RefreshCredentials credentials);
 }

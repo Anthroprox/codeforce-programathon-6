@@ -1,8 +1,7 @@
-package com.fiserv.codeforce.student;
+package com.fiserv.codeforce.form;
 
-import android.Manifest;
-
-import androidx.annotation.RequiresPermission;
+import com.fiserv.codeforce.student.AuthorizationRepositoryInterceptor;
+import com.fiserv.codeforce.student.Form;
 
 import org.androidannotations.rest.spring.annotations.Get;
 import org.androidannotations.rest.spring.annotations.Path;
@@ -11,16 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 
 @Rest(rootUrl = "http://192.168.128.22:25281/ApiServer/api/", converters = {MappingJackson2HttpMessageConverter.class}, interceptors = AuthorizationRepositoryInterceptor.class)
-public interface StudentRepository {
+public interface FormRepository {
 
-    @RequiresPermission(Manifest.permission.INTERNET)
-    @Get("/Student/GetMyStudents")
-    ResponseEntity<ListStudent> GetMyStudents();
-
-
-    @RequiresPermission(Manifest.permission.INTERNET)
-    @Get("/Student/GetByDni?dni={val}")
-    ResponseEntity<StudentPojo> GetByDni(@Path("val") int val);
-
-
+    @Get("/Form/GetById?formHeaderId={id}")
+    ResponseEntity<FullFormData> getById(@Path("id") int id);
 }

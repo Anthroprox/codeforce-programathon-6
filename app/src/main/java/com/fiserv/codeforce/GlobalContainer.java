@@ -26,6 +26,15 @@ public class GlobalContainer {
     }
 
     public GlobalContainer logout(){
+        loginData.setAccess_token("");
         return this;
+    }
+
+    public LoginData getLoginData() {
+        return loginData;
+    }
+
+    public UserInfo getUserInfo() {
+        return userInfo;
     }
 }

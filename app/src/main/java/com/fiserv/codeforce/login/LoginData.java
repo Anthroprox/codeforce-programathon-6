@@ -1,10 +1,12 @@
 package com.fiserv.codeforce.login;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.androidannotations.annotations.EBean;
 
 @EBean
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class LoginData {
 
     String access_token;
@@ -13,7 +15,7 @@ public class LoginData {
     String refresh_token;
     String scope;
 
-    public LoginData clone(){
+    public LoginData clone() {
         return new LoginData()
                 .setAccess_token(this.access_token)
                 .setExpires_in(this.expires_in)

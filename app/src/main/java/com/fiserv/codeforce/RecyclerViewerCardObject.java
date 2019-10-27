@@ -5,11 +5,13 @@ public class RecyclerViewerCardObject {
     private String name;
     private String exam;
     private Integer dni;
+    private Integer formId;
 
-    public RecyclerViewerCardObject(String name, String exam, Integer dni) {
+    public RecyclerViewerCardObject(String name, String exam, Integer dni, Integer formId) {
         this.name = name;
         this.exam = exam;
         this.dni = dni;
+        this.formId = formId;
     }
 
     public String getName() {
@@ -34,5 +36,13 @@ public class RecyclerViewerCardObject {
 
     public void setDni(Integer dni) {
         this.dni = dni;
+    }
+
+    public Integer getFormId() {
+        return formId;
+    }
+
+    public void setFormId(Integer formId) {
+        this.formId = formId;
     }
 }

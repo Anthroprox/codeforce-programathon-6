@@ -3,7 +3,6 @@ package com.fiserv.codeforce;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.Intent;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -11,10 +10,9 @@ import com.fiserv.codeforce.login.CredentialsPojo;
 import com.fiserv.codeforce.login.LoginRepository;
 import com.fiserv.codeforce.login.ResponseLogin;
 import com.fiserv.codeforce.utils.AsteriskPasswordTransformationMethod;
-import com.fiserv.codeforce.student.ListStudent;
-import com.fiserv.codeforce.student.StudentRepository;
-import com.fiserv.codeforce.student.StudentRepositoryInterceptor;
+import com.fiserv.codeforce.student.AuthorizationRepositoryInterceptor;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
@@ -40,9 +38,26 @@ public class MainActivity extends Activity {
 
     @Bean
     GlobalContainer globalContainer;
-    StudentRepositoryInterceptor studentRepositoryInterceptor;
+    AuthorizationRepositoryInterceptor studentRepositoryInterceptor;
 
-    
+
+    @AfterViews
+    public void afterViewsMethod(){
+        clearForm();
+    }
+
+    private void clearForm() {
+        txt_user.setText("");
+        txt_password.setText("");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        clearForm();
+
+    }
+
     @Click(R.id.btn_login)
     public void click() {
         if(matchLogin()){
@@ -66,6 +81,7 @@ public class MainActivity extends Activity {
 
             globalContainer.setLoginData(r.getLoginData());
             globalContainer.setUserInfo(r.getUserInfo());
+
             goIntent();
 
         }
@@ -80,7 +96,7 @@ public class MainActivity extends Activity {
 
     @UiThread
     public void goIntent(){
-        PrincipalActivity_.intent(getApplicationContext()).flags(Intent.FLAG_ACTIVITY_NEW_TASK).start();
+        MyStudentList_.intent(getApplicationContext()).flags(Intent.FLAG_ACTIVITY_NEW_TASK).start();
     }
 
     public Boolean matchUsername(String username){
@@ -89,7 +105,7 @@ public class MainActivity extends Activity {
     }
 
     public Boolean matchPass(String pass){
-        String regexPass = "^[a-zA-Z0-9!@#$%^&*(),.?\":{}|<>]{6,8}$$";
+        String regexPass = "^[a-zA-Z0-9!@#$%^&*(),.?\":{}|<>]{6,8}$";
         return pass.matches(regexPass);
     }
 
