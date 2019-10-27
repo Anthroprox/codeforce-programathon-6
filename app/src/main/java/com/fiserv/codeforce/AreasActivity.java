@@ -27,6 +27,8 @@ import com.fiserv.codeforce.result.ResultCell;
 import com.fiserv.codeforce.result.ResultMatrixParameter;
 import com.fiserv.codeforce.result.ResultRepository;
 import com.fiserv.codeforce.result.ResultRow;
+import com.fiserv.codeforce.student.StudentPojo;
+import com.fiserv.codeforce.student.StudentRepository;
 import com.fiserv.codeforce.user.UserInfo;
 
 import org.androidannotations.annotations.AfterExtras;
@@ -72,6 +74,9 @@ AreasActivity extends AppCompatActivity {
     @Extra("studentId")
     Integer studentID;
 
+    @Extra("studentDni")
+    Integer studentDni;
+
     @ViewById
     TextView txtDate;
 
@@ -80,6 +85,9 @@ AreasActivity extends AppCompatActivity {
 
     @RestService
     AttendanceRepository attendanceRepository;
+
+    @RestService
+    StudentRepository studentRepository;
 
     @AfterViews
     public void setDate() {
@@ -150,6 +158,20 @@ AreasActivity extends AppCompatActivity {
         logout();
     }
 
+    public static String getCurrentTimeStamp(){
+        try {
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String currentDateTime = dateFormat.format(new Date()); // Find todays date
+            currentDateTime = currentDateTime.replace(' ', 'T');
+
+            return currentDateTime;
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return null;
+        }
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Click(R.id.btnSaveAll)
@@ -161,7 +183,7 @@ AreasActivity extends AppCompatActivity {
 
             Attendance attendance = new Attendance()
                     .setId(0)
-                    .setDate("2019-10-27T10:48:53")
+                    .setDate(getCurrentTimeStamp())
                     .setFormId(fullFormData.getId())
                     .setStudentId(studentID)
                     //.setApplicatorId(userInfo.getUid())
@@ -172,7 +194,7 @@ AreasActivity extends AppCompatActivity {
             try {
                 ResponseEntity<Integer> ar = attendanceRepository.addAttendance(attendance);
                 if (ar.getStatusCode() == HttpStatus.OK)
-                    saveAllToAPI(resultMatrixParameter.setAttendanceId(ar.getBody()));
+                    saveAllToAPI(resultMatrixParameter.setAttendanceId(ar.getBody()), fullFormData.getId(),fullFormData.getName());
                 else
                     toastMessage("Fallo de inserción");
             } catch (Exception e) {
@@ -184,12 +206,29 @@ AreasActivity extends AppCompatActivity {
     }
 
     @Background
-    public void saveAllToAPI(ResultMatrixParameter resultMatrixParameter){
+    public void saveAllToAPI(ResultMatrixParameter resultMatrixParameter, Integer formID, String formName){
         ResponseEntity<Integer> r = resultRepository.addResults(resultMatrixParameter);
-        if(r.getStatusCode() == HttpStatus.OK)
+        if(r.getStatusCode() == HttpStatus.OK) {
             toastMessage("Información Guardada");
-        else
+
+            String studentName = null;
+            ResponseEntity<StudentPojo> student = studentRepository.GetByDni(studentDni);
+            if(student.getStatusCode() == HttpStatus.OK){
+                StudentPojo entity = student.getBody();
+                studentName = String.format("%s %s", entity.getFirstName(), entity.getLastName());
+            }
+
+            Intent t = new Intent(AreasActivity.this, CreateActionPlanForASQ3_.class);
+            t.putExtra("kid_name", studentName);
+            t.putExtra("studentDni", studentDni);
+            t.putExtra("asq3_name", formName);
+            t.putExtra("form_id", formID);
+            t.putExtra("ResultMatrixParameter", resultMatrixParameter);
+            startActivity(t);
+        }
+        else {
             toastMessage("Error Insertando Datos");
+        }
     }
 
     @UiThread

@@ -79,6 +79,7 @@ public class CreateActionPlanForASQ3 extends Activity {
 
     @RestService
     ResultRepository resultRepository;
+    
 
     @Extra("kid_name")
     String kid_name;
@@ -86,8 +87,11 @@ public class CreateActionPlanForASQ3 extends Activity {
     @Extra("asq3_name")
     String Asq3Name;
 
-//    @Extra("ResultMatrixParameter")
-//    ResultMatrixParameter resultMatrixParameter;
+    @Extra("studentDni")
+    Integer studentDni;
+
+    @Extra("ResultMatrixParameter")
+    ResultMatrixParameter resultMatrixParameter;
 
     Integer attendance = 24;
     Integer formId = 1;
