@@ -132,6 +132,22 @@ public class ConsultFormASQ3_Temp extends AppCompatActivity {
         openAreas();
     }
 
+    @Click(R.id.planes_btn)
+    public void clickActionPlans(){
+        openActionPlans();
+    }
+
+    @Background
+    protected void openActionPlans() {
+        ResponseEntity<StudentPojo> student = studentRepository.GetByDni(dni);
+        Intent i = new Intent(ConsultFormASQ3_Temp.this, ActionPlans_.class);
+        i.putExtra("form",formId);
+        i.putExtra("student",studentId);
+        i.putExtra("studentName", student.getBody().getFirstName() + " " + student.getBody().getLastName());
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
+    }
+
     @SuppressLint("NewApi")
     @Background
     protected void openAreas() {

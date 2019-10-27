@@ -65,9 +65,8 @@ public class ActionPlan {
         return this;
     }
 
-    @NonNull
     @Override
     public String toString() {
-        return this.name;
+        return name + " | " + description;
     }
 }

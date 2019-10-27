@@ -1,6 +1,7 @@
 package com.fiserv.codeforce.attendance;
 
 import android.annotation.SuppressLint;
+import com.fiserv.codeforce.action_plan.ActionPlan;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
@@ -26,4 +27,6 @@ public interface AttendanceRepository {
 
     @Post("/Attendance/AddAttendance")
     ResponseEntity<Integer> addAttendance(@Body Attendance attendance);
+    @Get("/Attendance/GetActionPlans?attendanceId={id}")
+    ResponseEntity<List<ActionPlan>> getActionByAttendanceId(@Path("id") Integer id);
 }
