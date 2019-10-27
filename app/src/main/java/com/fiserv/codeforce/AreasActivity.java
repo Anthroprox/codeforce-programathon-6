@@ -1,24 +1,30 @@
 package com.fiserv.codeforce;
 
 import androidx.annotation.ColorLong;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fiserv.codeforce.areas.AreaResult;
 import com.fiserv.codeforce.areas.AreasAdapter;
+import com.fiserv.codeforce.attendance.Attendance;
+import com.fiserv.codeforce.attendance.AttendanceRepository;
+import com.fiserv.codeforce.form.FullFormData;
 import com.fiserv.codeforce.result.ListColumnResults;
 import com.fiserv.codeforce.result.ListResultRow;
 import com.fiserv.codeforce.result.ResultCell;
 import com.fiserv.codeforce.result.ResultMatrixParameter;
 import com.fiserv.codeforce.result.ResultRepository;
 import com.fiserv.codeforce.result.ResultRow;
+import com.fiserv.codeforce.user.UserInfo;
 
 import org.androidannotations.annotations.AfterExtras;
 import org.androidannotations.annotations.AfterViews;
@@ -30,6 +36,7 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.rest.spring.annotations.RestService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.text.SimpleDateFormat;
@@ -45,17 +52,26 @@ public class AreasActivity extends AppCompatActivity {
     @Bean
     AreasAdapter adapter;
 
+    @Bean
+    UserInfo userInfo;
+
     @Extra("Result")
     AreaResult result;
 
-    @Extra("attendance")
-    Integer attendance;
+    @Extra("form")
+    FullFormData fullFormData;
+
+    @Extra("studentId")
+    Integer studentID;
 
     @ViewById
     TextView txtDate;
 
     @RestService
     ResultRepository resultRepository;
+
+    @RestService
+    AttendanceRepository attendanceRepository;
 
     @AfterViews
     public void setDate() {
@@ -112,9 +128,33 @@ public class AreasActivity extends AppCompatActivity {
             adapter.getAreaResultByArea(result.getAreaName()).setValues(result.getValues());
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Click(R.id.btnSaveAll)
     void clickSaveAll() {
-        saveAllToAPI(mapQuestionsToMatrixParameter());
+        ResultMatrixParameter resultMatrixParameter = mapQuestionsToMatrixParameter();
+
+        Attendance attendance = new Attendance()
+//                .setId(0)
+                .setDate(txtDate.getText().toString())
+                .setFormId(fullFormData.getId())
+                .setStudentId(studentID)
+                .setApplicatorId(userInfo.getUid())
+                .setStatus("None")
+                .setForm(fullFormData)
+                ;
+
+
+        attendanceRepository.addAttendance(attendance);
+        ResponseEntity<List<Attendance>> r = attendanceRepository.getByStudentId(studentID);
+        if(r.getStatusCode() == HttpStatus.OK){
+            List<Attendance> l = r.getBody();
+            Integer attendaceID = attendanceRepository.maxAttendaceID(l);
+            saveAllToAPI(
+                    resultMatrixParameter
+                            .setAttendanceId(attendaceID)
+            );
+        }
+
     }
 
     @Background
@@ -162,7 +202,7 @@ public class AreasActivity extends AppCompatActivity {
         ;
 
         ResultMatrixParameter resultMatrixParameter = new ResultMatrixParameter()
-                .setAttendanceId(attendance)
+//                .setAttendanceId(attendance)
                 .setResultList(resultRows);
 
         return resultMatrixParameter;

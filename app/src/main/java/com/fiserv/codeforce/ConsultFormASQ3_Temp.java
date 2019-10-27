@@ -137,8 +137,9 @@ public class ConsultFormASQ3_Temp extends AppCompatActivity {
     protected void openAreas() {
         ResponseEntity<FullFormData> formResponse = formRepository.getById(formId);
         if(formResponse.getStatusCode() == HttpStatus.OK){
-            Intent intent = new Intent(ConsultFormASQ3_Temp.this, QuestionAnswersActivity_.class);
+            Intent intent = new Intent(ConsultFormASQ3_Temp.this, AreasActivity_.class);
             intent.putExtra("form", formResponse.getBody());
+            intent.putExtra("studentId", studentId);
             startActivity(intent);
         }
 
