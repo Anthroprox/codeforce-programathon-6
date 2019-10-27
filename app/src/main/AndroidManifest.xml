@@ -17,13 +17,18 @@
         <activity android:name=".ConsultFormASQ3_Temp_"></activity>
         <activity android:name=".MyStudentList_" />
         <activity android:name=".AreasActivity_">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".QuestionAnswersActivity_" />
         <activity android:name=".MainActivity_">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                 <category android:name="android.intent.category.LAUNCHER" />
+<!--                 <category android:name="android.intent.category.LAUNCHER" />-->
             </intent-filter>
         </activity>
     </application>
