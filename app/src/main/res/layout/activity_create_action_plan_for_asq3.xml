@@ -143,11 +143,7 @@
                 <TableLayout
                     android:id="@+id/table_area_desarrollo"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                        android:layout_height="match_parent">
-                            tools:ignore="HardcodedText" />
-                            tools:ignore="HardcodedText" />
-                            tools:ignore="HardcodedText" />
+                    android:layout_height="match_parent" />
             </TableRow>
 
             <TableRow
