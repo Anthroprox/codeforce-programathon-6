@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AreasActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtDate"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:includeFontPadding="false"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:text="Comunicación"
+            android:textSize="24dp"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/divider0"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
+        <TextView
+            android:id="@+id/txtCom"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:includeFontPadding="false"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:text="Comunicación"
+            android:textSize="24dp"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/divider1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
+        <TextView
+            android:id="@+id/txtMG"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:includeFontPadding="false"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:text="Motora Gruesa"
+            android:textSize="24dp"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
+
+        <TextView
+            android:id="@+id/txtMF"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:includeFontPadding="false"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:text="Motora Fina"
+            android:textSize="24dp"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
+
+        <TextView
+            android:id="@+id/txtRP"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:includeFontPadding="false"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:text="Resolución de problemas"
+            android:textSize="24dp"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/divider4"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
+
+        <TextView
+            android:id="@+id/txtSocial"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:includeFontPadding="false"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:text="Socio-individual"
+            android:textSize="24dp"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
