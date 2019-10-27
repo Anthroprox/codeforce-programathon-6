@@ -83,7 +83,7 @@ public class AreasActivity extends AppCompatActivity {
         String pattern = "dd/MM/yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         String date = simpleDateFormat.format(new Date());
-        txtDate.setText("FECHA APLICACION: " + date);
+        txtDate.setText("Fecha Aplicación: " + date + " Nombre Formulario:"+ fullFormData.getName());
         if(result != null)
             adapter.getAreaResultByArea(result.getAreaName()).setValues(result.getValues());
     }
