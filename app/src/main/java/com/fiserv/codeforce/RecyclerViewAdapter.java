@@ -28,7 +28,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @FunctionalInterface
     public static interface OnClickListenerProvider {
-        View.OnClickListener provide(Integer studentDni, Integer formId);
+        View.OnClickListener provide(Integer studentDni, Integer formId, Integer studentId);
     }
 
     @NonNull
@@ -78,6 +78,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView exam;
         Integer dni;
         Integer formId;
+        Integer studentId;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -88,10 +89,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             itemView.setClickable(true);
         }
 
-        public void setDniAndFormId(Integer dni, Integer formId) {
+        public void setDniAndFormId(Integer dni, Integer formId, Integer studentId) {
             this.dni = dni;
             this.formId = formId;
-            itemView.setOnClickListener(onClickListenerProvider.provide(dni, formId));
+            this.studentId = studentId;
+            itemView.setOnClickListener(onClickListenerProvider.provide(dni, formId, studentId));
 
         }
     }
@@ -116,7 +118,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         RecyclerViewerCardObject item = mItemList.get(position);
         viewHolder.name.setText(item.getName());
         viewHolder.exam.setText(item.getExam());
-        viewHolder.setDniAndFormId(item.getDni(), item.getFormId());
+        viewHolder.setDniAndFormId(item.getDni(), item.getFormId(), item.getStudentId());
 
     }
 

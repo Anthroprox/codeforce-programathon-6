@@ -93,7 +93,8 @@ public class MyStudentList extends AppCompatActivity implements NavigationView.O
                         currentStudent.getFirstName() + " " + currentStudent.getLastName(),
                         currentStudent.getForm().getName(),
                         currentStudent.getDni(),
-                        currentStudent.getForm().getId()));
+                        currentStudent.getForm().getId(),
+                        currentStudent.getId()));
             }
         }
         flag = false;
@@ -111,10 +112,11 @@ public class MyStudentList extends AppCompatActivity implements NavigationView.O
     private void initAdapter() {
         while (flag) ;
         if (!rowsArrayList.isEmpty()) {
-            recyclerViewAdapter = new RecyclerViewAdapter(rowsArrayList, (studentDni, formId) -> (v) -> {
+            recyclerViewAdapter = new RecyclerViewAdapter(rowsArrayList, (studentDni, formId,studentId) -> (v) -> {
                 Intent t = new Intent(MyStudentList.this, ConsultFormASQ3_Temp_.class);
                 t.putExtra("dni", studentDni);
                 t.putExtra("formId", formId);
+                t.putExtra("studentId", studentId);
                 startActivity(t);
             });
             recyclerView.setAdapter(recyclerViewAdapter);
@@ -169,7 +171,8 @@ public class MyStudentList extends AppCompatActivity implements NavigationView.O
                             currentStudent.getFirstName() + " " + currentStudent.getLastName(),
                             currentStudent.getForm().getName(),
                             currentStudent.getDni(),
-                            currentStudent.getForm().getId()));
+                            currentStudent.getForm().getId(),
+                            currentStudent.getId()));
                     currentSize++;
                 }
 

@@ -1,12 +1,16 @@
 package com.fiserv.codeforce;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.fiserv.codeforce.attendance.Attendance;
+import com.fiserv.codeforce.attendance.AttendanceRepository;
 import com.fiserv.codeforce.form.FormRepository;
 import com.fiserv.codeforce.form.FullFormData;
 import com.fiserv.codeforce.student.Form;
@@ -16,6 +20,7 @@ import com.fiserv.codeforce.utils.CustomExpandableListAdapter;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.UiThread;
@@ -28,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @EActivity(R.layout.activity_consult_form_asq3__temp)
 public class ConsultFormASQ3_Temp extends AppCompatActivity {
@@ -38,8 +44,14 @@ public class ConsultFormASQ3_Temp extends AppCompatActivity {
     @RestService
     protected FormRepository formRepository;
 
+    @RestService
+    protected AttendanceRepository attendanceRepository;
+
     @Extra
     protected Integer dni;
+
+    @Extra
+    protected Integer studentId;
 
     @Extra
     protected Integer formId;
@@ -113,6 +125,26 @@ public class ConsultFormASQ3_Temp extends AppCompatActivity {
 //        dob.setText("");
 //        dniText.setText("");
 //        gender.setText("");
+    }
+
+    @Click(R.id.areas_btn)
+    public void clickAreas(){
+        openAreas();
+    }
+
+    @SuppressLint("NewApi")
+    @Background
+    private void openAreas() {
+        ResponseEntity<List<Attendance>> list = attendanceRepository.getByStudentId(studentId);
+        if(list.getStatusCode() == HttpStatus.OK){
+            Attendance attendance = list.getBody().stream()
+                    .filter(a -> a.getFormId() == formId)
+                    .findFirst().orElseGet(() -> null);
+            Intent intent = new Intent(ConsultFormASQ3_Temp.this, null);
+            intent.putExtra("attendance", attendance);
+            startActivity(intent);
+        }
+
     }
 
 
