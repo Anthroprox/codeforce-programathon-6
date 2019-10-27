@@ -8,10 +8,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
 import com.fiserv.codeforce.student.ListStudent;
+import com.fiserv.codeforce.student.StudentPojo;
 import com.fiserv.codeforce.student.StudentRepository;
 
 import org.androidannotations.annotations.AfterViews;
@@ -52,8 +54,13 @@ public class MyStudentList extends Activity {
 
         rawData = studentRepository.GetMyStudents().getBody();
 
+
         for (i = 0; i < Math.min(10, rawData.size()); i++) {
-            rowsArrayList.add(new RecyclerViewerCardObject(rawData.get(i).getFirstName() + " " + rawData.get(i).getLastName(), rawData.get(i).getForm().getName()));
+            StudentPojo currentStudent = rawData.get(i);
+            rowsArrayList.add(new RecyclerViewerCardObject(
+                    currentStudent.getFirstName() + " " + currentStudent.getLastName(),
+                    currentStudent.getForm().getName(),
+                    currentStudent.getDni()));
         }
 
         flag = false;
@@ -61,7 +68,11 @@ public class MyStudentList extends Activity {
 
     private void initAdapter() {
         while (flag) ;
-        recyclerViewAdapter = new RecyclerViewAdapter(rowsArrayList);
+        recyclerViewAdapter = new RecyclerViewAdapter(rowsArrayList, (studentDni) -> (v) -> {
+            Intent t = new Intent(MyStudentList.this, ConsultFormASQ3_Temp_.class);
+            t.putExtra("STUDENT_DNI", studentDni);
+            startActivity(t);
+        });
         recyclerView.setAdapter(recyclerViewAdapter);
     }
 
@@ -91,10 +102,10 @@ public class MyStudentList extends Activity {
 
     }
 
+    @UiThread
     private void loadMore() {
         rowsArrayList.add(null);
         recyclerViewAdapter.notifyItemInserted(rowsArrayList.size() - 1);
-
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -104,10 +115,14 @@ public class MyStudentList extends Activity {
                 int scrollPosition = rowsArrayList.size();
                 recyclerViewAdapter.notifyItemRemoved(scrollPosition);
                 int currentSize = scrollPosition;
-                int nextLimit = Math.min(currentSize + 10, rawData.size()-1);
+                int nextLimit = Math.min(currentSize + 10, rawData.size() - 1);
 
                 while (currentSize - 1 < nextLimit) {
-                    rowsArrayList.add(new RecyclerViewerCardObject(rawData.get(currentSize).getFirstName() + " " + rawData.get(currentSize).getLastName(), rawData.get(currentSize).getForm().getName()));
+                    StudentPojo currentStudent = rawData.get(currentSize);
+                    rowsArrayList.add(new RecyclerViewerCardObject(
+                            currentStudent.getFirstName() + " " + currentStudent.getLastName(),
+                            currentStudent.getForm().getName(),
+                            currentStudent.getDni()));
                     currentSize++;
                 }
 

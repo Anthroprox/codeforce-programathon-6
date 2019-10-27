@@ -2,7 +2,6 @@ package com.fiserv.codeforce;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.provider.Settings;
 import android.widget.TextView;
 
 import com.fiserv.codeforce.rest.DemoAPI;
@@ -10,8 +9,6 @@ import com.fiserv.codeforce.student.ListStudent;
 import com.fiserv.codeforce.student.StudentRepository;
 import com.fiserv.codeforce.student.StudentRepositoryInterceptor;
 
-import org.androidannotations.annotations.AfterInject;
-import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
@@ -19,11 +16,6 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.rest.spring.annotations.RestService;
-import org.springframework.http.client.ClientHttpRequestInterceptor;
-import org.springframework.web.client.RestTemplate;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends Activity {
@@ -58,6 +50,8 @@ public class MainActivity extends Activity {
         Intent sendIntent = new Intent(MainActivity.this, MyStudentList_.class);
         sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(sendIntent);
+//        MyStudentList_.intent(getApplicationContext()).start();
+
     }
 
 //    @AfterInject

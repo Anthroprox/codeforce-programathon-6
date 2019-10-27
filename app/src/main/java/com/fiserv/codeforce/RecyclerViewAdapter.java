@@ -17,11 +17,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final int VIEW_TYPE_LOADING = 1;
 
     public List<RecyclerViewerCardObject> mItemList;
+    private OnClickListenerProvider onClickListenerProvider;
 
 
-    public RecyclerViewAdapter(List<RecyclerViewerCardObject> itemList) {
+    public RecyclerViewAdapter(List<RecyclerViewerCardObject> itemList, OnClickListenerProvider onClickListenerProvider) {
 
         mItemList = itemList;
+        this.onClickListenerProvider = onClickListenerProvider;
+    }
+
+    @FunctionalInterface
+    public static interface OnClickListenerProvider {
+        View.OnClickListener provide(Integer studentDni);
     }
 
     @NonNull
@@ -69,12 +76,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         TextView name;
         TextView exam;
+        Integer dni;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
 
             name = itemView.findViewById(R.id.card_name);
             exam = itemView.findViewById(R.id.card_exam);
+
+            itemView.setClickable(true);
+        }
+
+        public void setDni(Integer dni) {
+            this.dni = dni;
+            itemView.setOnClickListener(onClickListenerProvider.provide(dni));
+
         }
     }
 
@@ -98,6 +114,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         RecyclerViewerCardObject item = mItemList.get(position);
         viewHolder.name.setText(item.getName());
         viewHolder.exam.setText(item.getExam());
+        viewHolder.setDni(item.getDni());
 
     }
 
