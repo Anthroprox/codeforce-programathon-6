@@ -195,8 +195,10 @@ public class CreateActionPlanForASQ3 extends Activity {
                         cell.setText(String.valueOf(l.get(i).getResults().get(j).getValue()));
                         row.addView(cell);
                     }
+
                     updateTableSQ3(row);
                 }
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -206,6 +208,7 @@ public class CreateActionPlanForASQ3 extends Activity {
     @UiThread
     public void updateTableSQ3(TableRow row) {
         tableSQ3Result.addView(row);
+
     }
 
 
@@ -317,7 +320,7 @@ public class CreateActionPlanForASQ3 extends Activity {
 
                         ResponseEntity<Integer> responseEntity = actionRepository.addCustomAction(customAction);
                         if (responseEntity.getStatusCode() == HttpStatus.OK) {
-                            Log.d(this.getClass().getName(), "Accept");
+                            toastMessage("Informacion Guardada!");
                         }
                     }else
                         toastMessage("Los comentarios deben ser menores a 250 caracteres");
