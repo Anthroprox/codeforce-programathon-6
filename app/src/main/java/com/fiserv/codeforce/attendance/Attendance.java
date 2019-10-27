@@ -14,6 +14,9 @@ public class Attendance implements Serializable {
     private String status;
     private FullFormData form;
 
+    public Attendance() {
+    }
+
     public Attendance(Integer id, String date, Integer formId, Integer studentId, Integer applicatorId, String status, FullFormData form) {
         this.id = id;
         this.date = date;
@@ -28,55 +31,62 @@ public class Attendance implements Serializable {
         return id;
     }
 
-    public void setId(Integer id) {
+    public Attendance setId(Integer id) {
         this.id = id;
+        return this;
     }
 
     public String getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public Attendance setDate(String date) {
         this.date = date;
+        return this;
     }
 
     public Integer getFormId() {
         return formId;
     }
 
-    public void setFormId(Integer formId) {
+    public Attendance setFormId(Integer formId) {
         this.formId = formId;
+        return this;
     }
 
     public Integer getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(Integer studentId) {
+    public Attendance setStudentId(Integer studentId) {
         this.studentId = studentId;
+        return this;
     }
 
     public Integer getApplicatorId() {
         return applicatorId;
     }
 
-    public void setApplicatorId(Integer applicatorId) {
+    public Attendance setApplicatorId(Integer applicatorId) {
         this.applicatorId = applicatorId;
+        return this;
     }
 
     public String getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public Attendance setStatus(String status) {
         this.status = status;
+        return this;
     }
 
     public FullFormData getForm() {
         return form;
     }
 
-    public void setForm(FullFormData form) {
+    public Attendance setForm(FullFormData form) {
         this.form = form;
+        return this;
     }
 }
