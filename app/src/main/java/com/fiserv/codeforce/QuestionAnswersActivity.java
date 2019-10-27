@@ -203,7 +203,7 @@ public class QuestionAnswersActivity extends AppCompatActivity {
     }
 
     public String validateInputs(){
-
+        return "";
     }
 }
 

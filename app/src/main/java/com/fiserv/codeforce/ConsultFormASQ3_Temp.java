@@ -134,7 +134,7 @@ public class ConsultFormASQ3_Temp extends AppCompatActivity {
 
     @SuppressLint("NewApi")
     @Background
-    private void openAreas() {
+    protected void openAreas() {
         ResponseEntity<List<Attendance>> list = attendanceRepository.getByStudentId(studentId);
         if(list.getStatusCode() == HttpStatus.OK){
             Attendance attendance = list.getBody().stream()
