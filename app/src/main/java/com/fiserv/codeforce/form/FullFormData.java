@@ -1,6 +1,9 @@
 package com.fiserv.codeforce.form;
 
-public class FullFormData {
+
+import java.io.Serializable;
+
+public class FullFormData implements Serializable {
 
     private Integer id;
     private String name;

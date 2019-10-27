@@ -65,12 +65,12 @@ public class QuestionAnswersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_question_answers);
     }
 
-    @TextChange({R.id.txtP1, R.id.txtP2,R.id.txtP3,R.id.txtP4,R.id.txtP5,R.id.txtP6})
+    @TextChange({R.id.txtP1, R.id.txtP2, R.id.txtP3, R.id.txtP4, R.id.txtP5, R.id.txtP6})
     void onTextChangesOnSomeTextViews(TextView tv, CharSequence text) {
         try {
             bindInputData();
             calculateTotal();
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
@@ -78,20 +78,24 @@ public class QuestionAnswersActivity extends AppCompatActivity {
     @Click(R.id.btnSave)
     public void clickSave() {
 
-        if(!validateAns())
+        if (!validateAns())
             toastMessage("Los campos deben estar entre: 0,5,10");
         else
             finishActivity(RESULT_OK);
 
-    };
+    }
+
+    ;
 
     @Click(R.id.btnCancel)
     public void clickCancel() {
         finishActivity(RESULT_CANCELED);
-    };
+    }
+
+    ;
 
     @AfterViews
-    public void bindData(){
+    public void bindData() {
 //        try {
 //            txtQAArea.setText(areaResult.getAreaName());
 //            txtP1.setText(String.valueOf(areaResult.getValue(0)));
@@ -105,30 +109,30 @@ public class QuestionAnswersActivity extends AppCompatActivity {
 //        }
     }
 
-    public boolean validateAns(){
+    public boolean validateAns() {
         try {
             bindInputData();
         } catch (NumberFormatException e) {
             return false;
         }
-        for (int areaResult:areaResult.getValues()) {
-            if(areaResult != 0 && areaResult != 5 && areaResult != 10)
+        for (int areaResult : areaResult.getValues()) {
+            if (areaResult != 0 && areaResult != 5 && areaResult != 10)
                 return false;
         }
         return true;
     }
 
-    public void bindInputData() throws NumberFormatException{
-            areaResult.setValue(0, Integer.parseInt(txtP1.getText().toString()));
-            areaResult.setValue(1, Integer.parseInt(txtP2.getText().toString()));
-            areaResult.setValue(2, Integer.parseInt(txtP3.getText().toString()));
-            areaResult.setValue(3, Integer.parseInt(txtP4.getText().toString()));
-            areaResult.setValue(4, Integer.parseInt(txtP5.getText().toString()));
-            areaResult.setValue(5, Integer.parseInt(txtP6.getText().toString()));
+    public void bindInputData() throws NumberFormatException {
+        areaResult.setValue(0, Integer.parseInt(txtP1.getText().toString()));
+        areaResult.setValue(1, Integer.parseInt(txtP2.getText().toString()));
+        areaResult.setValue(2, Integer.parseInt(txtP3.getText().toString()));
+        areaResult.setValue(3, Integer.parseInt(txtP4.getText().toString()));
+        areaResult.setValue(4, Integer.parseInt(txtP5.getText().toString()));
+        areaResult.setValue(5, Integer.parseInt(txtP6.getText().toString()));
     }
 
     @UiThread
-    public void toastMessage(String message){
+    public void toastMessage(String message) {
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_SHORT;
 
@@ -136,63 +140,54 @@ public class QuestionAnswersActivity extends AppCompatActivity {
         toast.show();
     }
 
-    public void calculateTotal(){
+    public void calculateTotal() {
         this.total = 0;
-        for (int areaResult:areaResult.getValues()) {
+        for (int areaResult : areaResult.getValues()) {
             total += areaResult;
         }
         setStatus();
-        txtTotal.setText("TOTAL: "+ total);
+        txtTotal.setText("TOTAL: " + total);
 
     }
 
-    public void finishActivity(int result){
-        Intent intent = new Intent(this,AreasActivity.class);
+    public void finishActivity(int result) {
+        Intent intent = new Intent(this, AreasActivity.class);
         intent.putExtra("result", areaResult);
         setResult(result, intent);
         finish();
     }
 
-    public void setStatus(){
-        if(areaResult.getAreaName().equals("Comunicación")){
-            if(total < 30.72)
+    public void setStatus() {
+        if (areaResult.getAreaName().equals("Comunicación")) {
+            if (total < 30.72)
                 txtTotal.setBackgroundColor(Color.RED);
-            else
-                if(total < 40)
-                    txtTotal.setBackgroundColor(Color.YELLOW);
-                else
-                    txtTotal.setBackgroundColor(Color.GREEN);
-
-        }
-        else
-        if(areaResult.getAreaName().equals("Motora Gruesa")){
-            if(total < 32.78)
-                txtTotal.setBackgroundColor(Color.RED);
-            else
-            if(total < 43)
+            else if (total < 40)
                 txtTotal.setBackgroundColor(Color.YELLOW);
             else
                 txtTotal.setBackgroundColor(Color.GREEN);
-        }
-        else
-        if(areaResult.getAreaName().equals("Motora Fina")) {
+
+        } else if (areaResult.getAreaName().equals("Motora Gruesa")) {
+            if (total < 32.78)
+                txtTotal.setBackgroundColor(Color.RED);
+            else if (total < 43)
+                txtTotal.setBackgroundColor(Color.YELLOW);
+            else
+                txtTotal.setBackgroundColor(Color.GREEN);
+        } else if (areaResult.getAreaName().equals("Motora Fina")) {
             if (total < 15.81)
                 txtTotal.setBackgroundColor(Color.RED);
             else if (total < 30)
                 txtTotal.setBackgroundColor(Color.YELLOW);
             else
                 txtTotal.setBackgroundColor(Color.GREEN);
-        }
-        else
-        if(areaResult.getAreaName().equals("Resolución de problemas")) {
+        } else if (areaResult.getAreaName().equals("Resolución de problemas")) {
             if (total < 31.30)
                 txtTotal.setBackgroundColor(Color.RED);
             else if (total < 41)
                 txtTotal.setBackgroundColor(Color.YELLOW);
             else
                 txtTotal.setBackgroundColor(Color.GREEN);
-        }else
-        if(areaResult.getAreaName().equals("Socio-individual")) {
+        } else if (areaResult.getAreaName().equals("Socio-individual")) {
             if (total < 26.6)
                 txtTotal.setBackgroundColor(Color.RED);
             else if (total < 38)
@@ -202,8 +197,8 @@ public class QuestionAnswersActivity extends AppCompatActivity {
         }
     }
 
-    public String validateInputs(){
-
+    public String validateInputs() {
+        return "";
     }
 }
 
