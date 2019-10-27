@@ -2,6 +2,7 @@ package com.fiserv.codeforce;
 
 import androidx.annotation.ColorLong;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -10,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +19,7 @@ import com.fiserv.codeforce.areas.AreaBean;
 import com.fiserv.codeforce.areas.AreaResult;
 import com.fiserv.codeforce.areas.AreasAdapter;
 import com.fiserv.codeforce.attendance.Attendance;
+import com.fiserv.codeforce.attendance.AttendanceHelper;
 import com.fiserv.codeforce.attendance.AttendanceRepository;
 import com.fiserv.codeforce.form.FullFormData;
 import com.fiserv.codeforce.result.ListColumnResults;
@@ -83,7 +86,7 @@ public class AreasActivity extends AppCompatActivity {
         String pattern = "dd/MM/yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         String date = simpleDateFormat.format(new Date());
-        txtDate.setText("Fecha Aplicación: " + date + " Nombre Formulario:"+ fullFormData.getName());
+        txtDate.setText("Fecha Aplicación: " + date + "\nFormulario: " + fullFormData.getName());
         if(result != null)
             adapter.getAreaResultByArea(result.getAreaName()).setValues(result.getValues());
     }
@@ -142,45 +145,45 @@ public class AreasActivity extends AppCompatActivity {
         setContentView(R.layout.activity_areas);
     }
 
+    @Click(R.id.btnCancel)
+    void clickCancel() {
+        logout();
+    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Click(R.id.btnSaveAll)
+    @Background
     void clickSaveAll() {
-        ResultMatrixParameter resultMatrixParameter = mapQuestionsToMatrixParameter();
+        if(validateResults()) {
 
-        Attendance attendance = new Attendance()
-//                .setId(0)
-                .setDate(txtDate.getText().toString())
-                .setFormId(fullFormData.getId())
-                .setStudentId(studentID)
-                .setApplicatorId(userInfo.getUid())
-                .setStatus("None")
-                .setForm(fullFormData)
-                ;
+            ResultMatrixParameter resultMatrixParameter = mapQuestionsToMatrixParameter();
 
+            Attendance attendance = new Attendance()
+                    .setId(0)
+                    .setDate("2019-10-27T10:48:53")
+                    .setFormId(fullFormData.getId())
+                    .setStudentId(studentID)
+                    //.setApplicatorId(userInfo.getUid())
+                    .setApplicatorId(1)
+                    .setStatus("Active")
+                    .setForm(fullFormData);
 
-        attendanceRepository.addAttendance(attendance);
-        ResponseEntity<List<Attendance>> r = attendanceRepository.getByStudentId(studentID);
-        if(r.getStatusCode() == HttpStatus.OK){
-            List<Attendance> l = r.getBody();
-            Integer attendaceID = attendanceRepository.maxAttendaceID(l);
-            saveAllToAPI(
-                    resultMatrixParameter
-                            .setAttendanceId(attendaceID)
-            );
+            ResponseEntity<Integer> ar = attendanceRepository.addAttendance(attendance);
+            if (ar.getStatusCode() == HttpStatus.OK)
+                saveAllToAPI(resultMatrixParameter.setAttendanceId(ar.getBody()));
+            else
+                toastMessage("Fallo de inserción");
         }
-
-        if(validateResults())
-            saveAllToAPI(mapQuestionsToMatrixParameter());
         else
             toastMessage("Por favor, Rellenar todos los campos");
     }
 
     @Background
     public void saveAllToAPI(ResultMatrixParameter resultMatrixParameter){
-        ResponseEntity r = resultRepository.addResults(resultMatrixParameter);
-        if(!r.getStatusCode().equals(200))
-            toastMessage("Datos insertados correctamente");
+        ResponseEntity<Integer> r = resultRepository.addResults(resultMatrixParameter);
+        if(r.getStatusCode() == HttpStatus.OK)
+            toastMessage("Información Guardada");
         else
             toastMessage("Error Insertando Datos");
     }
@@ -238,5 +241,41 @@ public class AreasActivity extends AppCompatActivity {
         return true;
     }
 
+    public void logout(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
+        builder.setTitle("Confirmar");
+        builder.setMessage("¿Desea cancelar los cambios?");
+
+        builder.setPositiveButton("Aceptar", (dialog, which) -> {
+            dialog.dismiss();
+            onBackPressed();
+        });
+
+        builder.setNegativeButton("Cancelar", (dialog, which) -> {
+            dialog.dismiss();
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            //onBackPressed();
+            logout();
+        }
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        //this is only needed if you have specific things
+        //that you want to do when the user presses the back button.
+        /* your specific things...*/
+        super.onBackPressed();
+        //logout();
+    }
 }
