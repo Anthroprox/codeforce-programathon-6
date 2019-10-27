@@ -120,6 +120,7 @@ public class MyStudentList extends AppCompatActivity implements NavigationView.O
         if (!rowsArrayList.isEmpty()) {
             recyclerViewAdapter = new RecyclerViewAdapter(rowsArrayList, (studentDni, formId,studentId) -> (v) -> {
                 Intent t = new Intent(MyStudentList.this, ConsultFormASQ3_Temp_.class);
+                t.putExtra("studentDni", studentDni);
                 t.putExtra("dni", studentDni);
                 t.putExtra("formId", formId);
                 t.putExtra("studentId", studentId);

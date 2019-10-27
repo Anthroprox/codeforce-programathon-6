@@ -19,7 +19,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import java.util.List;
 import java.util.NoSuchElementException;
 
-@Rest(rootUrl = "http://192.168.128.22:25281/ApiServer/api/", converters = {MappingJackson2HttpMessageConverter.class}, interceptors = AuthorizationRepositoryInterceptor.class)
+@Rest(rootUrl = "http://192.168.128.21:8171/ApiServer/api/", converters = {MappingJackson2HttpMessageConverter.class}, interceptors = AuthorizationRepositoryInterceptor.class)
 public interface AttendanceRepository {
 
     @Get("/Attendance/GetByStudentId?studentId={id}")

@@ -17,6 +17,7 @@ import com.fiserv.codeforce.student.Form;
 import com.fiserv.codeforce.student.StudentPojo;
 import com.fiserv.codeforce.student.StudentRepository;
 import com.fiserv.codeforce.utils.CustomExpandableListAdapter;
+import com.google.android.material.navigation.NavigationView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -52,6 +53,9 @@ public class ConsultFormASQ3_Temp extends AppCompatActivity {
 
     @Extra
     protected Integer studentId;
+
+    @Extra
+    protected Integer studentDni;
 
     @Extra
     protected Integer formId;
@@ -170,6 +174,7 @@ public class ConsultFormASQ3_Temp extends AppCompatActivity {
             Intent intent = new Intent(ConsultFormASQ3_Temp.this, AreasActivity_.class);
             intent.putExtra("form", formResponse.getBody());
             intent.putExtra("studentId", studentId);
+            intent.putExtra("studentDni", studentDni);
             startActivity(intent);
         }
 
