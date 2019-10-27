@@ -10,6 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingTop="20dp"
         app:layout_constraintEnd_toEndOf="parent">
 
         <TableLayout
@@ -26,12 +28,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nombre"
+                    android:textSize="18sp"
                     tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/txt_kid_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="18sp"
                     tools:ignore="HardcodedText" />
             </TableRow>
 
@@ -44,12 +48,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Fecha creación"
+                    android:textSize="18sp"
                     tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/txt_creation_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="18sp"
                     tools:ignore="HardcodedText" />
 
             </TableRow>
@@ -63,12 +69,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Fecha Aplicacion ASQ-3"
+                    android:textSize="18sp"
                     tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/txt_date_applied_asq3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="18sp"
                     tools:ignore="HardcodedText" />
             </TableRow>
 
@@ -81,12 +89,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nombre del ASQ-3"
+                    android:textSize="18sp"
                     tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/txt_asq3_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="18sp"
                     tools:ignore="HardcodedText" />
             </TableRow>
 
@@ -99,6 +109,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tabla de resultados"
+                    android:textSize="18sp"
                     tools:ignore="HardcodedText" />
             </TableRow>
 
@@ -121,6 +132,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Área de desarrollo"
+                    android:textSize="18sp"
                     tools:ignore="HardcodedText" />
             </TableRow>
 
@@ -143,6 +155,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Estrategias"
+                    android:textSize="18sp"
                     tools:ignore="HardcodedText" />
 
                 <Spinner
@@ -173,6 +186,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Comentarios por área"
+                    android:textSize="18sp"
                     tools:ignore="HardcodedText" />
 
                 <EditText
@@ -183,6 +197,7 @@
                     android:lines="5"
                     android:maxLines="10"
                     android:text=""
+                    android:textSize="18sp"
                     tools:ignore="HardcodedText" />
 
             </TableRow>

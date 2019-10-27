@@ -2,6 +2,7 @@ package com.fiserv.codeforce;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -10,6 +11,7 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -23,6 +25,8 @@ import com.fiserv.codeforce.result.ListResultRow;
 import com.fiserv.codeforce.result.ResultCell;
 import com.fiserv.codeforce.result.ResultMatrixParameter;
 import com.fiserv.codeforce.result.ResultRepository;
+import com.fiserv.codeforce.student.StudentPojo;
+import com.fiserv.codeforce.student.StudentRepository;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -79,10 +83,9 @@ public class CreateActionPlanForASQ3 extends Activity {
 
     @RestService
     ResultRepository resultRepository;
-    
 
-    @Extra("kid_name")
-    String kid_name;
+    @RestService
+    StudentRepository studentRepository;
 
     @Extra("asq3_name")
     String Asq3Name;
@@ -93,8 +96,12 @@ public class CreateActionPlanForASQ3 extends Activity {
     @Extra("ResultMatrixParameter")
     ResultMatrixParameter resultMatrixParameter;
 
-    Integer attendance = 24;
-    Integer formId = 1;
+//    Integer attendance = 24;
+
+    @Extra("form_id")
+    Integer formId;
+
+    StudentPojo studentPojo;
 
     List<ActionPlan> actionPlanList;
 
@@ -102,13 +109,13 @@ public class CreateActionPlanForASQ3 extends Activity {
 
     @AfterViews
     public void afterViews() {
-//        checkIfWantAnActionPlan();
+        checkIfWantAnActionPlan();
 
         String pattern = "dd/MM/yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         String date = simpleDateFormat.format(new Date());
 
-        textViewKidName.setText(kid_name);
+        loadStudent();
         textViewCreationDate.setText(date);
         textViewAppliedASQ3.setText(date);
         textViewASQ3Name.setText(Asq3Name);
@@ -131,18 +138,47 @@ public class CreateActionPlanForASQ3 extends Activity {
 
         builder.setNegativeButton("No", (dialog, which) -> {
             dialog.dismiss();
-            //TODO: Go to clico de desarrollo intetgral
+
+            Intent intent = new Intent(CreateActionPlanForASQ3.this, ConsultFormASQ3_Temp.class);
+            intent.putExtra("dni",studentDni);
+            intent.putExtra("studentId",studentPojo.getId());
+            intent.putExtra("studentDni",studentDni);
+            intent.putExtra("formId",formId);
+            startActivity(intent);
         });
 
         AlertDialog alert = builder.create();
         alert.show();
     }
 
+    @SuppressLint("SetTextI18n")
+    @Background
+    public void loadStudent(){
+        try{
+            ResponseEntity<StudentPojo> r = studentRepository.GetByDni(studentDni);
+            if(r.getStatusCode() == HttpStatus.OK){
+                StudentPojo s = r.getBody();
+                loadUIStudentTextField(s);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @UiThread
+    public void loadUIStudentTextField(StudentPojo s){
+        textViewKidName.setText(s.getFirstName() + " " + s.getLastName());
+    }
+
+    public boolean validateComment(){
+       return txtCommentaries.getText().length() <= 250;
+    }
+
 
     @Background
     public void createResultTable() {
         try {
-            ResponseEntity<ResultMatrixParameter> r = resultRepository.GetResultByAttendanceId(attendance);
+            ResponseEntity<ResultMatrixParameter> r = resultRepository.GetResultByAttendanceId(resultMatrixParameter.getAttendanceId());
             if (r.getStatusCode() == HttpStatus.OK) {
 //                resultMatrixParameter = r.getBody().getResultList();
                 ListResultRow l = r.getBody().getResultList();
@@ -154,6 +190,7 @@ public class CreateActionPlanForASQ3 extends Activity {
                     TableRow row = new TableRow(this);
                     for (int j = 0; j < columns; j++) {
                         TextView cell = new TextView(this);
+                        //cell.setPadding(10,2,5,2);
 //                        cell.setText("(" + i + ", " + j + ")");
                         cell.setText(String.valueOf(l.get(i).getResults().get(j).getValue()));
                         row.addView(cell);
@@ -212,7 +249,7 @@ public class CreateActionPlanForASQ3 extends Activity {
             });
         }
 
-        ResponseEntity<ResultMatrixParameter> r1 = resultRepository.GetResultByAttendanceId(attendance);
+        ResponseEntity<ResultMatrixParameter> r1 = resultRepository.GetResultByAttendanceId(resultMatrixParameter.getAttendanceId());
         if (r1.getStatusCode() == HttpStatus.OK) {
             ResultMatrixParameter rm = r1.getBody();
             rm
@@ -261,31 +298,43 @@ public class CreateActionPlanForASQ3 extends Activity {
     @SuppressLint("NewApi")
     @Background
     public void sendToSave() {
-        try {
-            actionPlanListToSave.forEach(actionPlan -> {
-                ResponseEntity responseEntity = actionRepository.assignActionPlan(attendance, actionPlan.getId());
-                if (responseEntity.getStatusCode() == HttpStatus.OK) {
-                    Log.d(this.getClass().getName(), "Accept");
-                }
-            });
 
-            if (txtCommentaries.getText().length() != 0 && txtCommentaries.getText().length() <= 250) {
-                CustomAction customAction = new CustomAction()
-                        .setId(5)
-                        .setName("Description")
-                        .setAttendanceId(attendance)
-                        .setDescription(txtCommentaries.getText().toString());
+            try {
+                actionPlanListToSave.forEach(actionPlan -> {
+                    ResponseEntity responseEntity = actionRepository.assignActionPlan(resultMatrixParameter.getAttendanceId(), actionPlan.getId());
+                    if (responseEntity.getStatusCode() == HttpStatus.OK) {
+                        Log.d(this.getClass().getName(), "Accept");
+                    }
+                });
 
-                ResponseEntity<Integer> responseEntity = actionRepository.addCustomAction(customAction);
-                if (responseEntity.getStatusCode() == HttpStatus.OK) {
-                    Log.d(this.getClass().getName(), "Accept");
+                if (txtCommentaries.getText().length() != 0) {
+                    if(validateComment()){
+                        CustomAction customAction = new CustomAction()
+                                .setId(5)
+                                .setName("Description")
+                                .setAttendanceId(resultMatrixParameter.getAttendanceId())
+                                .setDescription(txtCommentaries.getText().toString());
+
+                        ResponseEntity<Integer> responseEntity = actionRepository.addCustomAction(customAction);
+                        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+                            Log.d(this.getClass().getName(), "Accept");
+                        }
+                    }else
+                        toastMessage("Los comentarios deben ser menores a 250 caracteres");
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
+    }
 
+    @UiThread
+    public void toastMessage(String message){
+        Context context = getApplicationContext();
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, message, duration);
+        toast.show();
     }
 
     @Click(R.id.btn_cancel)
@@ -297,7 +346,12 @@ public class CreateActionPlanForASQ3 extends Activity {
 
         builder.setPositiveButton("Si", (dialog, which) -> {
             dialog.dismiss();
-//            MainActivity_.intent(getApplicationContext()).flags(Intent.FLAG_ACTIVITY_NEW_TASK).start();
+            Intent intent = new Intent(CreateActionPlanForASQ3.this, ConsultFormASQ3_Temp.class);
+            intent.putExtra("dni",studentDni);
+            intent.putExtra("studentId",studentPojo.getId());
+            intent.putExtra("studentDni",studentDni);
+            intent.putExtra("formId",formId);
+            startActivity(intent);
         });
 
         builder.setNegativeButton("No", (dialog, which) -> {
