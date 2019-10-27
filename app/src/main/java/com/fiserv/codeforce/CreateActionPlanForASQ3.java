@@ -114,7 +114,7 @@ public class CreateActionPlanForASQ3 extends Activity {
         createAreaDesarrollo();
     }
 
-    public void checkIfWantAnActionPlan(){
+    public void checkIfWantAnActionPlan() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle("Confirmar");
@@ -133,7 +133,6 @@ public class CreateActionPlanForASQ3 extends Activity {
         AlertDialog alert = builder.create();
         alert.show();
     }
-
 
 
     @Background
@@ -245,30 +244,43 @@ public class CreateActionPlanForASQ3 extends Activity {
     }
 
     @UiThread
-    public void updateTableAreaDesarrollo(TableRow row){
+    public void updateTableAreaDesarrollo(TableRow row) {
         tableAreaDesarrollo.addView(row);
     }
 
     @Click(R.id.btn_accept)
     public void btnAccept() {
         Log.d(this.getClass().getName(), "Accept");
+        sendToSave();
     }
 
     @SuppressLint("NewApi")
     @Background
-    public void sendToSave(){
-        actionPlanListToSave.forEach(actionPlan -> {
-            ResponseEntity responseEntity = actionRepository.assignActionPlan(attendance, actionPlan.getId());
-        });
+    public void sendToSave() {
+        try {
+            actionPlanListToSave.forEach(actionPlan -> {
+                ResponseEntity responseEntity = actionRepository.assignActionPlan(attendance, actionPlan.getId());
+                if (responseEntity.getStatusCode() == HttpStatus.OK) {
+                    Log.d(this.getClass().getName(), "Accept");
+                }
+            });
 
-        if(txtCommentaries.getText().length()!=0){
-            CustomAction customAction = new CustomAction()
-                    .setName("")
-                    .setAttendanceId(attendance)
-                    .setDescription(txtCommentaries.getText().toString());
+            if (txtCommentaries.getText().length() != 0 && txtCommentaries.getText().length() <= 250) {
+                CustomAction customAction = new CustomAction()
+                        .setId(5)
+                        .setName("Description")
+                        .setAttendanceId(attendance)
+                        .setDescription(txtCommentaries.getText().toString());
 
-            ResponseEntity responseEntity = actionRepository.addCustomAction(customAction);
+                ResponseEntity<Integer> responseEntity = actionRepository.addCustomAction(customAction);
+                if (responseEntity.getStatusCode() == HttpStatus.OK) {
+                    Log.d(this.getClass().getName(), "Accept");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
 
     }
 
@@ -297,9 +309,9 @@ public class CreateActionPlanForASQ3 extends Activity {
 //    TableRow tableRowStrategy;
 
     @Click(R.id.btn_add_estrategia)
-    public void newStrategy(){
-        ActionPlan actionPlan = (ActionPlan)spinner.getSelectedItem();
-        Log.d(this.getClass().getName(),actionPlan.getDescription());
+    public void newStrategy() {
+        ActionPlan actionPlan = (ActionPlan) spinner.getSelectedItem();
+        Log.d(this.getClass().getName(), actionPlan.getDescription());
 
         actionPlanListToSave.add(actionPlan);
 

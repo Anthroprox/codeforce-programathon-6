@@ -23,9 +23,13 @@ public interface ActionRepository {
 //    @Post("/ActionPlan/AddActionPlan")
 //    ResponseEntity<Integer> AddActionPlan();
 
-    @Put("/api/Attendance/AssignActionPlan?attendanceId={attendanceId}&&actionPlanId={actionPlanId}")
-    ResponseEntity assignActionPlan(@Path("attendanceId") Integer attendanceId, @Path("actionPlanId") Integer actionPlanId);
+    @Put("/Attendance/AssignActionPlan?attendanceId={attendanceId}&&actionPlanId={actionPlanId}")
+    ResponseEntity<Integer> assignActionPlan(@Path("attendanceId") Integer attendanceId, @Path("actionPlanId") Integer actionPlanId);
 
-    @Post("/api/CustomAction/Add")
-    ResponseEntity addCustomAction(@Body CustomAction customAction);
+    @Post("/CustomAction/Add")
+    ResponseEntity<Integer> addCustomAction(@Body CustomAction customAction);
+
+    @Put("/CustomAction/Update")
+    ResponseEntity<Integer> updateCustomAction(@Body CustomAction customAction);
+
 }
