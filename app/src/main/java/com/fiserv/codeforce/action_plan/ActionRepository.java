@@ -3,9 +3,11 @@ package com.fiserv.codeforce.action_plan;
 import com.fiserv.codeforce.areas.AreaLimit;
 import com.fiserv.codeforce.student.AuthorizationRepositoryInterceptor;
 
+import org.androidannotations.rest.spring.annotations.Body;
 import org.androidannotations.rest.spring.annotations.Get;
 import org.androidannotations.rest.spring.annotations.Path;
 import org.androidannotations.rest.spring.annotations.Post;
+import org.androidannotations.rest.spring.annotations.Put;
 import org.androidannotations.rest.spring.annotations.Rest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -18,6 +20,12 @@ public interface ActionRepository {
     @Get("/ActionPlan")
     ResponseEntity<List<ActionPlan>> getActionPlan();
 
-    @Post("/ActionPlan/AddActionPlan")
-    ResponseEntity<Integer> AddActionPlan();
+//    @Post("/ActionPlan/AddActionPlan")
+//    ResponseEntity<Integer> AddActionPlan();
+
+    @Put("/api/Attendance/AssignActionPlan?attendanceId={attendanceId}&&actionPlanId={actionPlanId}")
+    ResponseEntity assignActionPlan(@Path("attendanceId") Integer attendanceId, @Path("actionPlanId") Integer actionPlanId);
+
+    @Post("/api/CustomAction/Add")
+    ResponseEntity addCustomAction(@Body CustomAction customAction);
 }

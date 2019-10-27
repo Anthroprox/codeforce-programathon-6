@@ -9,9 +9,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <TableLayout
+            android:id="@+id/principal_table_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -24,7 +26,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nombre"
-                    tools:ignore="HardcodedText"/>
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/txt_kid_name"
@@ -79,7 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nombre del ASQ-3"
-                    tools:ignore="HardcodedText"/>
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/txt_asq3_name"
@@ -102,12 +104,12 @@
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent">
 
                 <TableLayout
                     android:id="@+id/table_sq3_result"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
             </TableRow>
 
             <TableRow
@@ -129,41 +131,7 @@
                 <TableLayout
                     android:id="@+id/table_area_desarrollo"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" >
-
-                        <TextView
-                            android:id="@+id/label_area_id"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="AreaId"
-                            tools:ignore="HardcodedText" />
-
-                        <TextView
-                            android:id="@+id/label_form_id"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="FormId"
-                            tools:ignore="HardcodedText"/>
-
-                        <TextView
-                            android:id="@+id/label_max_value"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="MaxValue"
-                            tools:ignore="HardcodedText"/>
-
-                        <TextView
-                            android:id="@+id/label_min_value"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="MinValue"
-                            tools:ignore="HardcodedText"/>
-                    </TableRow>
-                </TableLayout>
+                    android:layout_height="match_parent" />
             </TableRow>
 
             <TableRow
@@ -175,13 +143,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Estrategias"
-                    tools:ignore="HardcodedText"/>
+                    tools:ignore="HardcodedText" />
 
                 <Spinner
                     android:id="@+id/spinner_estrategias"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btn_add_estrategia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Agregar" />
             </TableRow>
+
+            <!--            <TableRow-->
+            <!--                android:id="@+id/table_row_strategy"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="match_parent">-->
+
+            <!--            </TableRow>-->
 
             <TableRow
                 android:layout_width="match_parent"
@@ -192,15 +173,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Comentarios por área"
-                    tools:ignore="HardcodedText"/>
+                    tools:ignore="HardcodedText" />
 
                 <EditText
-                    android:id="@+id/address1"
+                    android:id="@+id/txt_commentaries_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="left"
                     android:lines="5"
-                    android:maxLines="5"
+                    android:maxLines="10"
                     android:text=""
                     tools:ignore="HardcodedText" />
 

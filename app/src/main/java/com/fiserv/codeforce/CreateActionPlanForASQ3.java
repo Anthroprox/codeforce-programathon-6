@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.fiserv.codeforce.action_plan.ActionPlan;
 import com.fiserv.codeforce.action_plan.ActionRepository;
+import com.fiserv.codeforce.action_plan.CustomAction;
 import com.fiserv.codeforce.areas.AreaLimit;
 import com.fiserv.codeforce.areas.AreasAdapter;
 import com.fiserv.codeforce.areas.AreasRepository;
@@ -34,6 +36,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -56,11 +59,17 @@ public class CreateActionPlanForASQ3 extends Activity {
     @ViewById(R.id.table_sq3_result)
     TableLayout tableSQ3Result;
 
+    @ViewById(R.id.principal_table_layout)
+    TableLayout principalTableLayout;
+
     @ViewById(R.id.table_area_desarrollo)
     TableLayout tableAreaDesarrollo;
 
     @ViewById(R.id.spinner_estrategias)
     Spinner spinner;
+
+    @ViewById(R.id.txt_commentaries_id)
+    EditText txtCommentaries;
 
     @RestService
     AreasRepository areasRepository;
@@ -85,8 +94,11 @@ public class CreateActionPlanForASQ3 extends Activity {
 
     List<ActionPlan> actionPlanList;
 
+    List<ActionPlan> actionPlanListToSave = new ArrayList<>();
+
     @AfterViews
     public void afterViews() {
+//        checkIfWantAnActionPlan();
 
         String pattern = "dd/MM/yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
@@ -101,6 +113,28 @@ public class CreateActionPlanForASQ3 extends Activity {
         createEstrategias();
         createAreaDesarrollo();
     }
+
+    public void checkIfWantAnActionPlan(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Confirmar");
+        builder.setMessage("¿Desea Crear un Plan de Acción?");
+
+        builder.setPositiveButton("Si", (dialog, which) -> {
+            dialog.dismiss();
+//            MainActivity_.intent(getApplicationContext()).flags(Intent.FLAG_ACTIVITY_NEW_TASK).start();
+        });
+
+        builder.setNegativeButton("No", (dialog, which) -> {
+            dialog.dismiss();
+            //TODO: Go to clico de desarrollo intetgral
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+
 
     @Background
     public void createResultTable() {
@@ -220,6 +254,24 @@ public class CreateActionPlanForASQ3 extends Activity {
         Log.d(this.getClass().getName(), "Accept");
     }
 
+    @SuppressLint("NewApi")
+    @Background
+    public void sendToSave(){
+        actionPlanListToSave.forEach(actionPlan -> {
+            ResponseEntity responseEntity = actionRepository.assignActionPlan(attendance, actionPlan.getId());
+        });
+
+        if(txtCommentaries.getText().length()!=0){
+            CustomAction customAction = new CustomAction()
+                    .setName("")
+                    .setAttendanceId(attendance)
+                    .setDescription(txtCommentaries.getText().toString());
+
+            ResponseEntity responseEntity = actionRepository.addCustomAction(customAction);
+        }
+
+    }
+
     @Click(R.id.btn_cancel)
     public void btnCancel() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -239,5 +291,17 @@ public class CreateActionPlanForASQ3 extends Activity {
         AlertDialog alert = builder.create();
         alert.show();
 //        Log.d(this.getClass().getName(), "Cancel");
+    }
+
+//    @ViewById(R.id.table_row_strategy)
+//    TableRow tableRowStrategy;
+
+    @Click(R.id.btn_add_estrategia)
+    public void newStrategy(){
+        ActionPlan actionPlan = (ActionPlan)spinner.getSelectedItem();
+        Log.d(this.getClass().getName(),actionPlan.getDescription());
+
+        actionPlanListToSave.add(actionPlan);
+
     }
 }
