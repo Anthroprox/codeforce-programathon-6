@@ -134,14 +134,11 @@ public class ConsultFormASQ3_Temp extends AppCompatActivity {
 
     @SuppressLint("NewApi")
     @Background
-    private void openAreas() {
-        ResponseEntity<List<Attendance>> list = attendanceRepository.getByStudentId(studentId);
-        if(list.getStatusCode() == HttpStatus.OK){
-            Attendance attendance = list.getBody().stream()
-                    .filter(a -> a.getFormId() == formId)
-                    .findFirst().orElseGet(() -> null);
-            Intent intent = new Intent(ConsultFormASQ3_Temp.this, null);
-            intent.putExtra("attendance", attendance);
+    protected void openAreas() {
+        ResponseEntity<FullFormData> formResponse = formRepository.getById(formId);
+        if(formResponse.getStatusCode() == HttpStatus.OK){
+            Intent intent = new Intent(ConsultFormASQ3_Temp.this, QuestionAnswersActivity_.class);
+            intent.putExtra("form", formResponse.getBody());
             startActivity(intent);
         }
 
