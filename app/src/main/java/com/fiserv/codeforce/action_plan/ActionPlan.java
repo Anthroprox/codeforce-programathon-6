@@ -65,12 +65,6 @@ public class ActionPlan {
         return this;
     }
 
-    @NonNull
-    @Override
-    public String toString() {
-        return this.name;
-    }
-
     @Override
     public String toString() {
         return name + " | " + description;
