@@ -1,11 +1,16 @@
 package com.fiserv.codeforce.action_plan;
 
+import androidx.annotation.NonNull;
+
 public class ActionPlan {
     Integer id;
     Integer areaId;
     String name;
     String description;
     String status;
+
+    public ActionPlan() {
+    }
 
     public ActionPlan(Integer id, Integer areaId, String name, String description, String status) {
         this.id = id;
@@ -19,39 +24,50 @@ public class ActionPlan {
         return id;
     }
 
-    public void setId(Integer id) {
+    public ActionPlan setId(Integer id) {
         this.id = id;
+        return this;
     }
 
     public Integer getAreaId() {
         return areaId;
     }
 
-    public void setAreaId(Integer areaId) {
+    public ActionPlan setAreaId(Integer areaId) {
         this.areaId = areaId;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public ActionPlan setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public ActionPlan setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public String getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public ActionPlan setStatus(String status) {
         this.status = status;
+        return this;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

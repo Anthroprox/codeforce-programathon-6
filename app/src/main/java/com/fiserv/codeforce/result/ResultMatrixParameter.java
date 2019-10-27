@@ -2,7 +2,9 @@ package com.fiserv.codeforce.result;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ResultMatrixParameter {
+import java.io.Serializable;
+
+public class ResultMatrixParameter implements Serializable {
 
     Integer attendanceId;
     ListResultRow resultList;
