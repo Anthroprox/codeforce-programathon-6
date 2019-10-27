@@ -19,5 +19,5 @@ public interface ResultRepository {
 
     @RequiresPermission(Manifest.permission.INTERNET)
     @Post("/Result/AddResults")
-    ResponseEntity addResults(@Body ResultMatrixParameter resultMatrixParameter);
+    ResponseEntity<Integer> addResults(@Body ResultMatrixParameter resultMatrixParameter);
 }

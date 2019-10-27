@@ -1,5 +1,6 @@
 package com.fiserv.codeforce.attendance;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
@@ -24,16 +25,5 @@ public interface AttendanceRepository {
     ResponseEntity<List<Attendance>> getByStudentId(@Path("id") Integer id);
 
     @Post("/Attendance/AddAttendance")
-    ResponseEntity addAttendance(@Body Attendance attendance);
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    default int maxAttendaceID(List<Attendance> attendances){
-        return attendances
-                .stream()
-                .mapToInt(Attendance::getId)
-                .max()
-                .orElseThrow(NoSuchElementException::new);
-    }
-
-
+    ResponseEntity<Integer> addAttendance(@Body Attendance attendance);
 }
