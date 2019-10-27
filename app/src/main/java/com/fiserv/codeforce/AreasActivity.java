@@ -19,7 +19,6 @@ import com.fiserv.codeforce.areas.AreaBean;
 import com.fiserv.codeforce.areas.AreaResult;
 import com.fiserv.codeforce.areas.AreasAdapter;
 import com.fiserv.codeforce.attendance.Attendance;
-import com.fiserv.codeforce.attendance.AttendanceHelper;
 import com.fiserv.codeforce.attendance.AttendanceRepository;
 import com.fiserv.codeforce.form.FullFormData;
 import com.fiserv.codeforce.result.ListColumnResults;
