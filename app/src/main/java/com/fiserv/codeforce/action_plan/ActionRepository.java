@@ -15,5 +15,5 @@ import java.util.List;
 public interface ActionRepository {
 
     @Get("/ActionPlan")
-    ResponseEntity<List<ActionPlan>> getByStudentId();
+    ResponseEntity<List<ActionPlan>> getActionPlan();
 }

@@ -12,21 +12,28 @@ import android.widget.TextView;
 import com.fiserv.codeforce.action_plan.ActionPlan;
 import com.fiserv.codeforce.action_plan.ActionRepository;
 import com.fiserv.codeforce.areas.AreaLimit;
+import com.fiserv.codeforce.areas.AreasAdapter;
 import com.fiserv.codeforce.areas.AreasRepository;
+import com.fiserv.codeforce.result.ListResultRow;
+import com.fiserv.codeforce.result.ResultCell;
+import com.fiserv.codeforce.result.ResultMatrixParameter;
+import com.fiserv.codeforce.result.ResultRepository;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.rest.spring.annotations.RestService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @EActivity(R.layout.activity_create_action_plan_for_asq3)
 public class CreateActionPlanForASQ3 extends Activity {
@@ -43,7 +50,6 @@ public class CreateActionPlanForASQ3 extends Activity {
     @ViewById(R.id.txt_asq3_name)
     TextView textViewASQ3Name;
 
-
     @ViewById(R.id.table_sq3_result)
     TableLayout tableSQ3Result;
 
@@ -59,16 +65,26 @@ public class CreateActionPlanForASQ3 extends Activity {
     @RestService
     ActionRepository actionRepository;
 
+    @RestService
+    ResultRepository resultRepository;
+
     @Extra("kid_name")
     String kid_name;
 
     @Extra("asq3_name")
     String Asq3Name;
 
+//    @Extra("ResultMatrixParameter")
+//    ResultMatrixParameter resultMatrixParameter;
+
+    Integer attendance = 24;
+    Integer formId = 1;
+
     List<ActionPlan> actionPlanList;
 
     @AfterViews
-    public void afterViews(){
+    public void afterViews() {
+
         String pattern = "dd/MM/yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         String date = simpleDateFormat.format(new Date());
@@ -83,107 +99,126 @@ public class CreateActionPlanForASQ3 extends Activity {
         createAreaDesarrollo();
     }
 
+    @Background
+    public void createResultTable() {
+        try {
+            ResponseEntity<ResultMatrixParameter> r = resultRepository.GetResultByAttendanceId(attendance);
+            if (r.getStatusCode() == HttpStatus.OK) {
+//                resultMatrixParameter = r.getBody().getResultList();
+                ListResultRow l = r.getBody().getResultList();
 
-    public void createResultTable(){
-        int rows = 5;
-        int columns = 7;
-//        TableLayout tableSQ3Result = findViewById(R.id.table_sq3_result);
-//        TableLayout tableSQ3Result = new TableLayout(this);
-        for (int i = 0; i < rows; i++) {
-            TableRow row = new TableRow(this);
-            for (int j = 0; j < columns; j++) {
-                TextView cell = new TextView(this);
-                cell.setText("(" + i + ", " + j + ")");
-                row.addView(cell);
+                int rows = l.size();
+                int columns = l.get(0).getResults().size();
+
+                for (int i = 0; i < rows; i++) {
+                    TableRow row = new TableRow(this);
+                    for (int j = 0; j < columns; j++) {
+                        TextView cell = new TextView(this);
+//                        cell.setText("(" + i + ", " + j + ")");
+                        cell.setText(String.valueOf(l.get(i).getResults().get(j).getValue()));
+                        row.addView(cell);
+                    }
+                    updateTableSQ3(row);
+                }
             }
-            tableSQ3Result.addView(row);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
+    @UiThread
+    public void updateTableSQ3(TableRow row) {
+        tableSQ3Result.addView(row);
+    }
+
+
     @SuppressLint("NewApi")
-    public void createEstrategias(){
-        actionPlanList = Arrays.asList(
-                new ActionPlan()
-                        .setId(0)
-                        .setAreaId(0)
-                        .setName("Actividad 1")
-                        .setDescription("")
-                        .setStatus(""),
-                new ActionPlan()
-                        .setId(1)
-                        .setAreaId(0)
-                        .setName("Actividad 2")
-                        .setDescription("")
-                        .setStatus(""),
-                new ActionPlan()
-                        .setId(2)
-                        .setAreaId(0)
-                        .setName("Actividad 3")
-                        .setDescription("")
-                        .setStatus("")
-        );
+    @Background
+    public void createEstrategias() {
+        try {
+            ResponseEntity<List<ActionPlan>> r = actionRepository.getActionPlan();
+            if (r.getStatusCode() == HttpStatus.OK) {
+                actionPlanList = r.getBody();
 
-        ActionPlan[] arraySpinner = actionPlanList.toArray(new ActionPlan[0]);
+                ActionPlan[] arraySpinner = actionPlanList.toArray(new ActionPlan[0]);
 
-        ArrayAdapter<ActionPlan> adapter = new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_spinner_item,
-                arraySpinner
-        );
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                ArrayAdapter<ActionPlan> adapter = new ArrayAdapter<>(
+                        this,
+                        android.R.layout.simple_spinner_item,
+                        arraySpinner
+                );
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                updateSpinner(adapter);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @UiThread
+    public void updateSpinner(ArrayAdapter<ActionPlan> adapter) {
         spinner.setAdapter(adapter);
     }
 
     @SuppressLint("NewApi")
-    public void createAreaDesarrollo(){
-        List<AreaLimit> a = Arrays.asList(
-                new AreaLimit()
-                        .setAreaId(0)
-                        .setFormId(0)
-                        .setMaxValue(100)
-                        .setMinValue(0),
-                new AreaLimit()
-                        .setAreaId(1)
-                        .setFormId(0)
-                        .setMaxValue(100)
-                        .setMinValue(0),
-                new AreaLimit()
-                        .setAreaId(2)
-                        .setFormId(0)
-                        .setMaxValue(100)
-                        .setMinValue(0)
-        );
+    @Background
+    public void createAreaDesarrollo() {
+        HashMap<Integer, AreaLimit> hashLimit = new HashMap<>();
+        HashMap<Integer, Double> hashAverage = new HashMap<>();
+        ResponseEntity<List<AreaLimit>> r = areasRepository.getByStudentId(formId);
+        if (r.getStatusCode() == HttpStatus.OK) {
+            r.getBody().forEach(areaLimit -> {
+                hashLimit.put(areaLimit.getAreaId(), areaLimit);
+            });
+        }
 
-        a.forEach(areaLimit -> {
-            TableRow row = new TableRow(this);
+        ResponseEntity<ResultMatrixParameter> r1 = resultRepository.GetResultByAttendanceId(attendance);
+        if (r1.getStatusCode() == HttpStatus.OK) {
+            ResultMatrixParameter rm = r1.getBody();
+            rm
+                    .getResultList()
+                    .forEach(resultRow -> {
+                        double average = resultRow.getResults()
+                                .stream()
+                                .mapToDouble(ResultCell::getValue)
+                                .average()
+                                .orElse(Double.NaN);
+                        hashAverage.put(resultRow.getAreaId(), average);
+                    });
 
-            TextView cellAreaId = new TextView(this);
-            TextView cellFormId = new TextView(this);
-            TextView cellMaxValue = new TextView(this);
-            TextView cellMinValue = new TextView(this);
+        }
 
-            cellAreaId.setText(String.valueOf(areaLimit.getAreaId()));
-            cellFormId.setText(String.valueOf(areaLimit.getFormId()));
-            cellMaxValue.setText(String.valueOf(areaLimit.getMaxValue()));
-            cellMinValue.setText(String.valueOf(areaLimit.getMinValue()));
+        hashAverage.keySet().forEach(area -> {
+            double average = hashAverage.get(area);
+            if (average <= hashLimit.get(area).getMaxValue()) {
+                TableRow row = new TableRow(this);
 
-            row.addView(cellAreaId);
-            row.addView(cellFormId);
-            row.addView(cellMaxValue);
-            row.addView(cellMinValue);
+                TextView cellArea = new TextView(this);
+                TextView cellAverage = new TextView(this);
 
-            tableAreaDesarrollo.addView(row);
+                cellArea.setText(AreasAdapter.AREAS.get(area));
+                cellAverage.setText(String.valueOf(average));
+
+                row.addView(cellArea);
+                row.addView(cellAverage);
+
+                updateTableAreaDesarrollo(row);
+            }
         });
+    }
 
+    @UiThread
+    public void updateTableAreaDesarrollo(TableRow row){
+        tableAreaDesarrollo.addView(row);
     }
 
     @Click(R.id.btn_accept)
-    public void btnAccept(){
+    public void btnAccept() {
         Log.d(this.getClass().getName(), "Accept");
     }
 
     @Click(R.id.btn_cancel)
-    public void btnCancel(){
+    public void btnCancel() {
         Log.d(this.getClass().getName(), "Cancel");
     }
 }

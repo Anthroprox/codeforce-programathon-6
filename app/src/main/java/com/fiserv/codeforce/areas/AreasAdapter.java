@@ -11,11 +11,22 @@ import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 @EBean
 public class AreasAdapter {
 
+    public static final HashMap<Integer,String> AREAS = new HashMap<>();
+
     ArrayList<AreaResult> results;
+
+    static{
+        AREAS.put(1,"Comunicación");
+        AREAS.put(2,"Motora Gruesa");
+        AREAS.put(3,"Motora Fina");
+        AREAS.put(4,"Resolución de problemas");
+        AREAS.put(5,"Socio-individual");
+    }
 
 
     @AfterInject

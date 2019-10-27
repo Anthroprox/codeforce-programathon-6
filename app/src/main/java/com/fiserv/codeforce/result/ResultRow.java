@@ -1,6 +1,8 @@
 package com.fiserv.codeforce.result;
 
-public class ResultRow {
+import java.io.Serializable;
+
+public class ResultRow implements Serializable {
     Integer areaId;
     ListColumnResults results;
 
