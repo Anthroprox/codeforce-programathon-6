@@ -8,7 +8,7 @@ public class AreaResult implements Serializable {
 
     private Integer id;
     private String areaName;
-    private int[] values = new int[6];
+    private int[] values = {-1,-1,-1,-1,-1,-1};
 
 
     public AreaResult(Integer id, String areaName){

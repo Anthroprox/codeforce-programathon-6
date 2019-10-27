@@ -92,17 +92,17 @@ public class QuestionAnswersActivity extends AppCompatActivity {
 
     @AfterViews
     public void bindData(){
-        try {
-            txtQAArea.setText(areaResult.getAreaName());
-            txtP1.setText(String.valueOf(areaResult.getValue(0)));
-            txtP2.setText(String.valueOf(areaResult.getValue(1)));
-            txtP3.setText(String.valueOf(areaResult.getValue(2)));
-            txtP4.setText(String.valueOf(areaResult.getValue(3)));
-            txtP5.setText(String.valueOf(areaResult.getValue(4)));
-            txtP6.setText(String.valueOf(areaResult.getValue(5)));
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+//        try {
+//            txtQAArea.setText(areaResult.getAreaName());
+//            txtP1.setText(String.valueOf(areaResult.getValue(0)));
+//            txtP2.setText(String.valueOf(areaResult.getValue(1)));
+//            txtP3.setText(String.valueOf(areaResult.getValue(2)));
+//            txtP4.setText(String.valueOf(areaResult.getValue(3)));
+//            txtP5.setText(String.valueOf(areaResult.getValue(4)));
+//            txtP6.setText(String.valueOf(areaResult.getValue(5)));
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
     }
 
     public boolean validateAns(){
@@ -200,6 +200,9 @@ public class QuestionAnswersActivity extends AppCompatActivity {
             else
                 txtTotal.setBackgroundColor(Color.GREEN);
         }
+    }
+
+    public String validateInputs(){
 
     }
 }
