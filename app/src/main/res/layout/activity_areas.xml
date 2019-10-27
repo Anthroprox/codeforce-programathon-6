@@ -37,7 +37,8 @@
             android:paddingTop="10dp"
             android:text="Comunicación"
             android:textSize="24dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:maxEms="2"/>
 
         <View
             android:id="@+id/divider1"
@@ -54,7 +55,8 @@
             android:paddingTop="10dp"
             android:text="Motora Gruesa"
             android:textSize="24dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:maxEms="2"/>
 
         <View
             android:id="@+id/divider2"
@@ -72,7 +74,8 @@
             android:paddingTop="10dp"
             android:text="Motora Fina"
             android:textSize="24dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:maxEms="2"/>
 
         <View
             android:id="@+id/divider3"
@@ -90,13 +93,15 @@
             android:paddingTop="10dp"
             android:text="Resolución de problemas"
             android:textSize="24dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:maxEms="2"/>
 
         <View
             android:id="@+id/divider4"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="?android:attr/listDivider" />
+            android:background="?android:attr/listDivider"
+            android:maxEms="2"/>
 
 
         <TextView
@@ -108,7 +113,8 @@
             android:paddingTop="10dp"
             android:text="Socio-individual"
             android:textSize="24dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:maxEms="2"/>
 
         <LinearLayout
             android:layout_width="match_parent"

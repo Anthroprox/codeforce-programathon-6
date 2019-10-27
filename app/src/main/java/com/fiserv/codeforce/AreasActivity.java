@@ -19,7 +19,6 @@ import com.fiserv.codeforce.areas.AreaBean;
 import com.fiserv.codeforce.areas.AreaResult;
 import com.fiserv.codeforce.areas.AreasAdapter;
 import com.fiserv.codeforce.attendance.Attendance;
-import com.fiserv.codeforce.attendance.AttendanceHelper;
 import com.fiserv.codeforce.attendance.AttendanceRepository;
 import com.fiserv.codeforce.form.FullFormData;
 import com.fiserv.codeforce.result.ListColumnResults;
@@ -52,7 +51,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @EActivity(R.layout.activity_areas)
-public class AreasActivity extends AppCompatActivity {
+public class
+AreasActivity extends AppCompatActivity {
 
     @Bean
     AreasAdapter adapter;
@@ -277,5 +277,25 @@ public class AreasActivity extends AppCompatActivity {
         /* your specific things...*/
         super.onBackPressed();
         //logout();
+    }
+
+
+    public void goToActionPlan(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Confirmar");
+        builder.setMessage("¿Desea crear una plan de acción?");
+
+        builder.setPositiveButton("Aceptar", (dialog, which) -> {
+            dialog.dismiss();
+
+        });
+
+        builder.setNegativeButton("Cancelar", (dialog, which) -> {
+            dialog.dismiss();
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }
