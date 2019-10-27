@@ -2,12 +2,15 @@ package com.fiserv.codeforce;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
 
 import com.fiserv.codeforce.action_plan.ActionPlan;
 import com.fiserv.codeforce.action_plan.ActionRepository;
@@ -219,6 +222,22 @@ public class CreateActionPlanForASQ3 extends Activity {
 
     @Click(R.id.btn_cancel)
     public void btnCancel() {
-        Log.d(this.getClass().getName(), "Cancel");
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Confirmar");
+        builder.setMessage("¿Desea salir sin guardar?");
+
+        builder.setPositiveButton("Si", (dialog, which) -> {
+            dialog.dismiss();
+//            MainActivity_.intent(getApplicationContext()).flags(Intent.FLAG_ACTIVITY_NEW_TASK).start();
+        });
+
+        builder.setNegativeButton("No", (dialog, which) -> {
+            dialog.dismiss();
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+//        Log.d(this.getClass().getName(), "Cancel");
     }
 }
