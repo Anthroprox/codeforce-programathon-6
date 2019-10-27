@@ -14,17 +14,18 @@ import java.util.ArrayList;
 
 @EBean
 public class AreasAdapter {
+
     ArrayList<AreaResult> results;
 
 
     @AfterInject
     void initAdapter() {
         results = new ArrayList<>();
-        results.add(new AreaResult("Comunicación"));
-        results.add(new AreaResult("Motora Gruesa"));
-        results.add(new AreaResult("Motora Fina"));
-        results.add(new AreaResult("Resolución de problemas"));
-        results.add(new AreaResult("Socio-individual"));
+        results.add(new AreaResult(1,"Comunicación"));
+        results.add(new AreaResult(2,"Motora Gruesa"));
+        results.add(new AreaResult(3,"Motora Fina"));
+        results.add(new AreaResult(4,"Resolución de problemas"));
+        results.add(new AreaResult(5,"Socio-individual"));
     }
 
     public AreaResult getAreaResultByArea(String areaName){
@@ -47,5 +48,9 @@ public class AreasAdapter {
              total += values;
         }
         return total;
+    }
+
+    public ArrayList<AreaResult> getResults() {
+        return results;
     }
 }
