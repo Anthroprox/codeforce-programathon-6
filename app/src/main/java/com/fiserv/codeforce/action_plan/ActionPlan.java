@@ -7,6 +7,9 @@ public class ActionPlan {
     String description;
     String status;
 
+    public ActionPlan() {
+    }
+
     public ActionPlan(Integer id, Integer areaId, String name, String description, String status) {
         this.id = id;
         this.areaId = areaId;
@@ -53,5 +56,10 @@ public class ActionPlan {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return name + " | " + description;
     }
 }

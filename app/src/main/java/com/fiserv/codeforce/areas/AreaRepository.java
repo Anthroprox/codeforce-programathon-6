@@ -1,6 +1,5 @@
-package com.fiserv.codeforce.attendance;
+package com.fiserv.codeforce.areas;
 
-import com.fiserv.codeforce.action_plan.ActionPlan;
 import com.fiserv.codeforce.student.AuthorizationRepositoryInterceptor;
 
 import org.androidannotations.rest.spring.annotations.Get;
@@ -9,16 +8,10 @@ import org.androidannotations.rest.spring.annotations.Rest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 
-import java.util.List;
-
 @Rest(rootUrl = "http://192.168.128.22:25281/ApiServer/api/", converters = {MappingJackson2HttpMessageConverter.class}, interceptors = AuthorizationRepositoryInterceptor.class)
-public interface AttendanceRepository {
+public interface AreaRepository {
 
-    @Get("/Attendance/GetByStudentId?studentId={id}")
-    ResponseEntity<List<Attendance>> getByStudentId(@Path("id") Integer id);
-
-    @Get("/Attendance/GetActionPlans?attendanceId={id}")
-    ResponseEntity<List<ActionPlan>> getActionByAttendanceId(@Path("id") Integer id);
-
+    @Get("/Areas/GetById?id={id}")
+    public ResponseEntity<Area> getById(@Path("id") Integer id);
 
 }

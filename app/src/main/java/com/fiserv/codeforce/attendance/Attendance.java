@@ -14,6 +14,9 @@ public class Attendance implements Serializable {
     private String status;
     private FullFormData form;
 
+    public Attendance() {
+    }
+
     public Attendance(Integer id, String date, Integer formId, Integer studentId, Integer applicatorId, String status, FullFormData form) {
         this.id = id;
         this.date = date;

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="900px"
+    app:cardElevation="8dp"
+    android:id="@+id/card_view_action"
+    app:layout_scrollFlags="scroll"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/line1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="fill_horizontal"
+            >
+
+            <TextView
+                android:id="@+id/card_name_2"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="Hello Left" />
+
+            <TextView
+                android:id="@+id/card_date_2"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:layout_alignParentRight="true"
+                android:text="Hello Right" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/line2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/line1"
+            android:layout_gravity="fill_horizontal"
+            android:layout_marginTop="-3dp">
+
+            <TextView
+                android:id="@+id/card_exam_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="Hello Right" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/line2">
+            <ExpandableListView
+                android:id="@+id/expandableListViewACtionPlan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:divider="@android:color/darker_gray"
+
+                android:dividerHeight="0.7dp"
+                android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft">
+
+
+            </ExpandableListView>
+        </LinearLayout>
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
