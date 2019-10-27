@@ -169,11 +169,15 @@ AreasActivity extends AppCompatActivity {
                     .setStatus("Active")
                     .setForm(fullFormData);
 
-            ResponseEntity<Integer> ar = attendanceRepository.addAttendance(attendance);
-            if (ar.getStatusCode() == HttpStatus.OK)
-                saveAllToAPI(resultMatrixParameter.setAttendanceId(ar.getBody()));
-            else
-                toastMessage("Fallo de inserción");
+            try {
+                ResponseEntity<Integer> ar = attendanceRepository.addAttendance(attendance);
+                if (ar.getStatusCode() == HttpStatus.OK)
+                    saveAllToAPI(resultMatrixParameter.setAttendanceId(ar.getBody()));
+                else
+                    toastMessage("Fallo de inserción");
+            } catch (Exception e) {
+                toastMessage("Fallo en la inserción");
+            }
         }
         else
             toastMessage("Por favor, Rellenar todos los campos");
