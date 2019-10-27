@@ -51,7 +51,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @EActivity(R.layout.activity_areas)
-public class AreasActivity extends AppCompatActivity {
+public class
+AreasActivity extends AppCompatActivity {
 
     @Bean
     AreasAdapter adapter;
@@ -276,5 +277,25 @@ public class AreasActivity extends AppCompatActivity {
         /* your specific things...*/
         super.onBackPressed();
         //logout();
+    }
+
+
+    public void goToActionPlan(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Confirmar");
+        builder.setMessage("¿Desea crear una plan de acción?");
+
+        builder.setPositiveButton("Aceptar", (dialog, which) -> {
+            dialog.dismiss();
+
+        });
+
+        builder.setNegativeButton("Cancelar", (dialog, which) -> {
+            dialog.dismiss();
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

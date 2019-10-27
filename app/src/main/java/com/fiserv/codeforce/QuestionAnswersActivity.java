@@ -101,9 +101,10 @@ public class QuestionAnswersActivity extends AppCompatActivity {
 
     @AfterViews
     public void bindData(){
+        txtQAArea.setText(areaResult.getAreaName());
         if(areaResult.getValues()[0] != -1) {
             try {
-                txtQAArea.setText(areaResult.getAreaName());
+
                 txtP1.setText(String.valueOf(areaResult.getValue(0)));
                 txtP2.setText(String.valueOf(areaResult.getValue(1)));
                 txtP3.setText(String.valueOf(areaResult.getValue(2)));
