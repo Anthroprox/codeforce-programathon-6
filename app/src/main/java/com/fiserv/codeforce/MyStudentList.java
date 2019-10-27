@@ -70,8 +70,14 @@ public class MyStudentList extends AppCompatActivity implements NavigationView.O
 
     @AfterViews
     public void postCreate() {
+
         rowsArrayList.clear();
         populateData();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         initAdapter();
         initScrollListener();
     }
@@ -103,7 +109,7 @@ public class MyStudentList extends AppCompatActivity implements NavigationView.O
     @org.androidannotations.annotations.UiThread
     public void toastMessage(String message) {
         Context context = getApplicationContext();
-        int duration = Toast.LENGTH_SHORT;
+        int duration = Toast.LENGTH_LONG;
 
         Toast toast = Toast.makeText(context, message, duration);
         toast.show();

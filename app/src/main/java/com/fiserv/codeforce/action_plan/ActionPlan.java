@@ -70,4 +70,9 @@ public class ActionPlan {
     public String toString() {
         return this.name;
     }
+
+    @Override
+    public String toString() {
+        return name + " | " + description;
+    }
 }
