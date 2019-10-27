@@ -3,6 +3,7 @@ package com.fiserv.codeforce;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.Intent;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -10,6 +11,9 @@ import com.fiserv.codeforce.login.CredentialsPojo;
 import com.fiserv.codeforce.login.LoginRepository;
 import com.fiserv.codeforce.login.ResponseLogin;
 import com.fiserv.codeforce.utils.AsteriskPasswordTransformationMethod;
+import com.fiserv.codeforce.student.ListStudent;
+import com.fiserv.codeforce.student.StudentRepository;
+import com.fiserv.codeforce.student.StudentRepositoryInterceptor;
 
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
@@ -36,6 +40,8 @@ public class MainActivity extends Activity {
 
     @Bean
     GlobalContainer globalContainer;
+    StudentRepositoryInterceptor studentRepositoryInterceptor;
+
     
     @Click(R.id.btn_login)
     public void click() {
@@ -111,4 +117,20 @@ public class MainActivity extends Activity {
         toast.show();
     }
 
+    @UiThread
+    public void loadView() {
+        Intent sendIntent = new Intent(MainActivity.this, MyStudentList_.class);
+        sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(sendIntent);
+//        MyStudentList_.intent(getApplicationContext()).start();
+
+    }
+
+//    @AfterInject
+//    void initAuth() {
+//        RestTemplate template = studentRepository.getRestTemplate();
+//        List<ClientHttpRequestInterceptor> interceptors = new ArrayList<ClientHttpRequestInterceptor>();
+//        interceptors.add(authInterceptor);
+//        template.setInterceptors(interceptors);
+//    }
 }
